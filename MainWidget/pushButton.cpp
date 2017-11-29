@@ -1,8 +1,8 @@
-#include "sudokuWidget.h"
 #include <QDebug>
 #include <QMessageBox>
 #include <QString>
 #include <QTimer>
+#include "sudokuWidget.h"
 
 void sudokuMain::setButtonNum(QPushButton *pB,int Num,int size)
 {

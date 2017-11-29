@@ -1,6 +1,3 @@
-#include "sudokuWidget.h"
-#include "processDlg.h"
-#include "conformDlg.h"
 #include <QDebug>
 #include <QTimer>
 #include <QString>
@@ -9,6 +6,9 @@
 #include <QMessageBox>
 #include <QHostAddress>
 #include <QUdpSocket>
+#include "sudokuWidget.h"
+#include "processDlg.h"
+#include "conformDlg.h"
 
 void sudokuMain::mainTimerUp()
 {

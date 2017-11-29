@@ -1,10 +1,10 @@
+#include <QtCore/qglobal.h>
+#include <QtCore/QTextCodec>
+#include <QString>
 #include "ui_sudokuWidget.h"
 #include "sudokuWidget.h"
 #include "processDlg.h"
 #include "conformDlg.h"
-#include <QtCore/qglobal.h>
-#include <QtCore/QTextCodec>
-#include <QString>
 
 sudokuMain::sudokuMain(QWidget *parent)
     : QWidget(parent)

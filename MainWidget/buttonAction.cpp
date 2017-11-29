@@ -1,5 +1,3 @@
-#include "sudokuWidget.h"
-#include "explanatryDlg.h"
 #include <QDebug>
 #include <QString>
 #include <QFile>
@@ -11,6 +9,8 @@
 #include <QAbstractButton>
 #include "aboutdlg.h"
 #include "processDlg.h"
+#include "sudokuWidget.h"
+#include "explanatryDlg.h"
 
 void sudokuMain::resetTable()
 {

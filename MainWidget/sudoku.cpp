@@ -1,6 +1,6 @@
+#include <QDebug>
 #include "linkList.h"
 #include "sudokuWidget.h"
-#include <QDebug>
 
 //The Calculation
 int sudokuMain::GetSolution(int table[9][9][10],int solution[9][9])
