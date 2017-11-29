@@ -1,7 +1,7 @@
 #ifndef COPYRIGHTDLG_H
 #define COPYRIGHTDLG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "ui_copyright.h"
 
 class copyrightDlg : public QDialog,public Ui_copyright

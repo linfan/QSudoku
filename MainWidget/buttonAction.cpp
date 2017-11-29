@@ -21,25 +21,25 @@ void sudokuMain::resetTable()
         for(j=0;j<9;j++)
         {
             table[i][j][0] = 0;
-            writable[i][j] = TRUE;
+            writable[i][j] = true;
             pB = getPointFromPosition(i+1,j+1);
             setButtonNum(pB,0,40);
-            pB->setFlat(FALSE);
+            pB->setFlat(false);
         }
     }
-    m_bLocked = FALSE;
-    pB_setTable->setHidden(FALSE);
-    pB_fileSet->setHidden(FALSE);
-    pB_autoSet->setHidden(FALSE);
-    pB_start->setHidden(TRUE);
-    pB_resetTable->setHidden(TRUE);
-    pB_giveUp->setHidden(TRUE);
-    pB_resetTable->setDisabled(TRUE);
-    pB_start->setDisabled(TRUE);
-    pB_giveUp->setDisabled(FALSE);
-    groupBox_2->setDisabled(FALSE);
-    groupBox_1->setDisabled(FALSE);
-    lineEdit_IP->setDisabled(FALSE);
+    m_bLocked = false;
+    pB_setTable->setHidden(false);
+    pB_fileSet->setHidden(false);
+    pB_autoSet->setHidden(false);
+    pB_start->setHidden(true);
+    pB_resetTable->setHidden(true);
+    pB_giveUp->setHidden(true);
+    pB_resetTable->setDisabled(true);
+    pB_start->setDisabled(true);
+    pB_giveUp->setDisabled(false);
+    groupBox_2->setDisabled(false);
+    groupBox_1->setDisabled(false);
+    lineEdit_IP->setDisabled(false);
 }
 
 void sudokuMain::autoSet()
@@ -219,9 +219,9 @@ void sudokuMain::autoSet()
             {
                 pB = getPointFromPosition(L+1,R+1);
                 setButtonNum(pB,table[L][R][0],40);
-                pB->setFlat(TRUE);
+                pB->setFlat(true);
                 writable[L][R] = 0;
-                //pB->setDisabled(TRUE);
+                //pB->setDisabled(true);
             }
         }
     }
@@ -233,21 +233,21 @@ void sudokuMain::autoSet()
             writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
     }
-    m_bLocked = TRUE;
-    pB_setTable->setHidden(TRUE);
-    pB_fileSet->setHidden(TRUE);
-    pB_autoSet->setHidden(TRUE);
-    pB_start->setHidden(FALSE);
-    pB_resetTable->setHidden(FALSE);
-    pB_giveUp->setHidden(FALSE);
-    pB_resetTable->setDisabled(FALSE);
-    pB_start->setDisabled(FALSE);
-    pB_giveUp->setDisabled(TRUE);
-    groupBox_2->setDisabled(TRUE);
+    m_bLocked = true;
+    pB_setTable->setHidden(true);
+    pB_fileSet->setHidden(true);
+    pB_autoSet->setHidden(true);
+    pB_start->setHidden(false);
+    pB_resetTable->setHidden(false);
+    pB_giveUp->setHidden(false);
+    pB_resetTable->setDisabled(false);
+    pB_start->setDisabled(false);
+    pB_giveUp->setDisabled(true);
+    groupBox_2->setDisabled(true);
     if(rB_single->isChecked())
     {
-        groupBox_1->setDisabled(TRUE);
-        lineEdit_IP->setDisabled(TRUE);
+        groupBox_1->setDisabled(true);
+        lineEdit_IP->setDisabled(true);
     }
     if(rB_online->isChecked())
     {
@@ -265,23 +265,23 @@ void sudokuMain::giveUp()
         {
             pB = getPointFromPosition(i+1,j+1);
             setButtonNum(pB,0,40);
-            pB->setFlat(FALSE);
+            pB->setFlat(false);
             table[i][j][0] = 0;
             writable[i][j] = 1;
         }
     }
-    m_bLocked = FALSE;
+    m_bLocked = false;
     if(!m_bFinished)
     {
         sendDatagram(MES_GIVEUP);
     }
-    m_bFinished = FALSE;
-    pB_setTable->setHidden(FALSE);
-    pB_fileSet->setHidden(FALSE);
-    pB_autoSet->setHidden(FALSE);
-    pB_start->setHidden(TRUE);
-    pB_resetTable->setHidden(TRUE);
-    pB_giveUp->setHidden(TRUE);
+    m_bFinished = false;
+    pB_setTable->setHidden(false);
+    pB_fileSet->setHidden(false);
+    pB_autoSet->setHidden(false);
+    pB_start->setHidden(true);
+    pB_resetTable->setHidden(true);
+    pB_giveUp->setHidden(true);
     main_Timer->stop();
     m_iTimeSecond = 0;
     m_iTimeMinute = 0;
@@ -290,10 +290,10 @@ void sudokuMain::giveUp()
     progressBar_1->setValue(0);
     progressBar_2->setValue(0);
     pB_giveUp->setText(QString(tr("认输")));
-    groupBox_1->setDisabled(FALSE);
-    groupBox_2->setDisabled(FALSE);
-    lineEdit_IP->setDisabled(FALSE);
-    m_processDlg->m_bConnected = FALSE;
+    groupBox_1->setDisabled(false);
+    groupBox_2->setDisabled(false);
+    lineEdit_IP->setDisabled(false);
+    m_processDlg->m_bConnected = false;
 }
 
 void sudokuMain::startGame()
@@ -319,10 +319,10 @@ void sudokuMain::startGame()
         int L,R;
         connect_Timer->start(100);
         this->m_processDlg->m_Timer.start(10000);
-        m_processDlg->m_bCanceled = FALSE;
-        m_processDlg->m_bConnected = FALSE;
+        m_processDlg->m_bCanceled = false;
+        m_processDlg->m_bConnected = false;
         m_processDlg->show();
-        this->setVisible(FALSE);
+        this->setVisible(false);
         sendDatagram(MES_REQUEST);//Requesting For Connect
         for(L=0;L<9;L++)
         {
@@ -336,9 +336,9 @@ void sudokuMain::startGame()
     {
         int L,R;
         main_Timer->start(1000);
-        pB_start->setDisabled(TRUE);
-        pB_resetTable->setDisabled(TRUE);
-        pB_giveUp->setDisabled(FALSE);
+        pB_start->setDisabled(true);
+        pB_resetTable->setDisabled(true);
+        pB_giveUp->setDisabled(false);
         m_beginPorgressBar = 1;
         //qDebug() << "m_blankNumber: " << m_blankNumber <<endl;
         //qDebug() << "m_totalBlank: " << m_totalBlank <<endl;
@@ -353,11 +353,11 @@ void sudokuMain::startGame()
                 writable[L][R] = writableLock[L][R];//Resume Array "writable"
             }
         }
-        m_bLocked = FALSE;
-        //m_processDlg->m_bConnected = FALSE;
-        groupBox_1->setDisabled(TRUE);
-        groupBox_2->setDisabled(TRUE);
-        lineEdit_IP->setDisabled(TRUE);
+        m_bLocked = false;
+        //m_processDlg->m_bConnected = false;
+        groupBox_1->setDisabled(true);
+        groupBox_2->setDisabled(true);
+        lineEdit_IP->setDisabled(true);
     }
 }
 
@@ -393,9 +393,9 @@ void sudokuMain::setTable()
                 {
                     pB = getPointFromPosition(L+1,R+1);
                     setButtonNum(pB,table[L][R][0],40);
-                    pB->setFlat(TRUE);
+                    pB->setFlat(true);
                     writable[L][R] = 0;
-                    //pB->setDisabled(TRUE);
+                    //pB->setDisabled(true);
                 }
             }
         }
@@ -408,21 +408,21 @@ void sudokuMain::setTable()
             writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
     }
-    m_bLocked = TRUE;
-    pB_setTable->setHidden(TRUE);
-    pB_fileSet->setHidden(TRUE);
-    pB_autoSet->setHidden(TRUE);
-    pB_start->setHidden(FALSE);
-    pB_resetTable->setHidden(FALSE);
-    pB_giveUp->setHidden(FALSE);
-    pB_resetTable->setDisabled(FALSE);
-    pB_start->setDisabled(FALSE);
-    pB_giveUp->setDisabled(TRUE);
-    groupBox_2->setDisabled(TRUE);
+    m_bLocked = true;
+    pB_setTable->setHidden(true);
+    pB_fileSet->setHidden(true);
+    pB_autoSet->setHidden(true);
+    pB_start->setHidden(false);
+    pB_resetTable->setHidden(false);
+    pB_giveUp->setHidden(false);
+    pB_resetTable->setDisabled(false);
+    pB_start->setDisabled(false);
+    pB_giveUp->setDisabled(true);
+    groupBox_2->setDisabled(true);
     if(rB_single->isChecked())
     {
-        groupBox_1->setDisabled(TRUE);
-        lineEdit_IP->setDisabled(TRUE);
+        groupBox_1->setDisabled(true);
+        lineEdit_IP->setDisabled(true);
     }
     if(rB_online->isChecked())
     {
@@ -482,9 +482,9 @@ void sudokuMain::fileSet()
                 {
                     pB = getPointFromPosition(L+1,R+1);
                     setButtonNum(pB,table[L][R][0],40);
-                    pB->setFlat(TRUE);
+                    pB->setFlat(true);
                     writable[L][R] = 0;
-                    //pB->setDisabled(TRUE);
+                    //pB->setDisabled(true);
                 }
             }
         }
@@ -497,21 +497,21 @@ void sudokuMain::fileSet()
             writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
     }
-    m_bLocked = TRUE;
-    pB_setTable->setHidden(TRUE);
-    pB_fileSet->setHidden(TRUE);
-    pB_autoSet->setHidden(TRUE);
-    pB_start->setHidden(FALSE);
-    pB_resetTable->setHidden(FALSE);
-    pB_giveUp->setHidden(FALSE);
-    pB_resetTable->setDisabled(FALSE);
-    pB_start->setDisabled(FALSE);
-    pB_giveUp->setDisabled(TRUE);
-    groupBox_2->setDisabled(TRUE);
+    m_bLocked = true;
+    pB_setTable->setHidden(true);
+    pB_fileSet->setHidden(true);
+    pB_autoSet->setHidden(true);
+    pB_start->setHidden(false);
+    pB_resetTable->setHidden(false);
+    pB_giveUp->setHidden(false);
+    pB_resetTable->setDisabled(false);
+    pB_start->setDisabled(false);
+    pB_giveUp->setDisabled(true);
+    groupBox_2->setDisabled(true);
     if(rB_single->isChecked())
     {
-        groupBox_1->setDisabled(TRUE);
-        lineEdit_IP->setDisabled(TRUE);
+        groupBox_1->setDisabled(true);
+        lineEdit_IP->setDisabled(true);
     }
     if(rB_online->isChecked())
     {
@@ -526,7 +526,7 @@ void sudokuMain::win()
         int i,j;
         main_Timer->stop();
         m_blankNumber = -1;
-        m_beginPorgressBar = FALSE;
+        m_beginPorgressBar = false;
         for(i=0;i<9;i++)
         {
             for(j=0;j<9;j++)
@@ -535,10 +535,10 @@ void sudokuMain::win()
                 setButtonNum(getPointFromPosition(i+1,j+1),table[i][j][0],40);
             }
         }
-        m_bFinished = TRUE;
+        m_bFinished = true;
         pB_giveUp->setText(QString(tr("完成")));
         progressBar_1->setValue(100);
-        m_bLocked = TRUE;
+        m_bLocked = true;
     }
 }
 

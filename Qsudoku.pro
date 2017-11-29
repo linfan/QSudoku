@@ -6,8 +6,7 @@ UI_DIR += MediumFiles
 RCC_DIR += MediumFiles
 MOC_DIR += MediumFiles
 OBJECTS_DIR += MediumFiles
-INCLUDEPATH += Dialogs \
-    MainWidget
+INCLUDEPATH += Dialogs MainWidget
 DEPENDPATH += .
 INCLUDEPATH += .
 
@@ -40,6 +39,6 @@ SOURCES += Dialogs/ruleDlg.cpp \
     Dialogs/conformDlg.cpp \
     MainWidget/diverseFunction.cpp \
     MainWidget/sudokuWidget.cpp
-QT += network
+QT += network widgets
 RESOURCES += Resource/sudoku.qrc
 OTHER_FILES += MainWidget/nearlyFinish.table

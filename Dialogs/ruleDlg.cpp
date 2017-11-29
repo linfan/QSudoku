@@ -9,7 +9,7 @@ ruleDlg::ruleDlg(QWidget *parent)
     switchPage();
     textL->setAlignment(Qt::AlignHCenter);
     textR->setAlignment(Qt::AlignHCenter);
-    pBL->setVisible(FALSE);
+    pBL->setVisible(false);
     this->setWindowTitle(QString(tr("数独规则")));
     connect(pBL,SIGNAL(clicked()),this,SLOT(previous()));
     connect(pBR,SIGNAL(clicked()),this,SLOT(next()));
@@ -72,13 +72,13 @@ void ruleDlg::next()
 {
     if(m_page==7)
     {
-        pBR->setVisible(FALSE);
+        pBR->setVisible(false);
     }
     else
     {
         m_page++;
-        pBL->setVisible(TRUE);
-        pBR->setVisible(TRUE);
+        pBL->setVisible(true);
+        pBR->setVisible(true);
     }
     switchPage();
 }
@@ -87,13 +87,13 @@ void ruleDlg::previous()
 {
     if(m_page==1)
     {
-        pBL->setVisible(FALSE);
+        pBL->setVisible(false);
     }
     else
     {
         m_page--;
-        pBL->setVisible(TRUE);
-        pBR->setVisible(TRUE);
+        pBL->setVisible(true);
+        pBR->setVisible(true);
     }
     switchPage();
 }

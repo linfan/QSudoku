@@ -1,7 +1,7 @@
 #ifndef EXPLANATRYDLG_H
 #define EXPLANATRYDLG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "ui_explanatry.h"
 
 class explanatryDlg : public QDialog,public Ui_explanatry

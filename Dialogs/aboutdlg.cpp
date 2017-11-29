@@ -24,28 +24,28 @@ aboutDlg::~aboutDlg()
 void aboutDlg::showExeplanatry()
 {
     //close();
-    this->setVisible(FALSE);
+    this->setVisible(false);
     explanatryDlg ex(this->parentWidget());
     ex.exec();
-    this->setVisible(TRUE);
+    this->setVisible(true);
 }
 
 void aboutDlg::showRule()
 {
     //close();
-    this->setVisible(FALSE);
+    this->setVisible(false);
     ruleDlg ru(this->parentWidget());
     ru.exec();
-    this->setVisible(TRUE);
+    this->setVisible(true);
 }
 
 void aboutDlg::showCopyright()
 {
     //close();
-    this->setVisible(FALSE);
+    this->setVisible(false);
     copyrightDlg co(this->parentWidget());
     co.exec();
-    this->setVisible(TRUE);
+    this->setVisible(true);
 }
 /*
 void aboutDlg::closeDialog()

@@ -1,10 +1,10 @@
 #ifndef _SUDOKUMAIN_H_
 #define _SUDOKUMAIN_H_
 
-#include <QtGui/QWidget>
-#include "ui_sudokuWidget.h"
+#include <QtWidgets/QWidget>
 #include <QUdpSocket>
 #include <QTimer>
+#include "ui_sudokuWidget.h"
 
 #define MES_REQUEST 200
 #define MES_CONFIRM 300

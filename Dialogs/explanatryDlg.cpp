@@ -8,7 +8,7 @@ explanatryDlg::explanatryDlg(QWidget *parent)
     m_page = 1;
     switchPage();
     this->setWindowTitle(QString(tr("操作说明")));
-    pBL->setVisible(FALSE);
+    pBL->setVisible(false);
     connect(pBL,SIGNAL(clicked()),this,SLOT(previous()));
     connect(pBR,SIGNAL(clicked()),this,SLOT(next()));
 }
@@ -68,13 +68,13 @@ void explanatryDlg::next()
 {
     if(m_page==10)
     {
-        pBR->setVisible(FALSE);
+        pBR->setVisible(false);
     }
     else
     {
         m_page++;
-        pBL->setVisible(TRUE);
-        pBR->setVisible(TRUE);
+        pBL->setVisible(true);
+        pBR->setVisible(true);
     }
     switchPage();
 }
@@ -83,13 +83,13 @@ void explanatryDlg::previous()
 {
     if(m_page==1)
     {
-        pBL->setVisible(FALSE);
+        pBL->setVisible(false);
     }
     else
     {
         m_page--;
-        pBL->setVisible(TRUE);
-        pBR->setVisible(TRUE);
+        pBL->setVisible(true);
+        pBR->setVisible(true);
     }
     switchPage();
 }

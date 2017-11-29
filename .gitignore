@@ -1,4 +1,7 @@
-# Temporary File
+# QtCreator Project file
+*.pro.user
+
+# Temporary files
 *~
 
 # Prerequisites

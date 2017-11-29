@@ -1,7 +1,7 @@
 #ifndef CONFORMDLG_H
 #define CONFORMDLG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include <QTimer>
 #include "ui_conform.h"
 

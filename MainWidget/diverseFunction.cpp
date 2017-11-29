@@ -50,12 +50,12 @@ void sudokuMain::connectTimerUp()
         connect_Timer->stop();
         if(m_processDlg->m_bConnected)
         {
-            this->setVisible(TRUE);
+            this->setVisible(true);
             m_processDlg->close();
         }
         else if(m_processDlg->m_bCanceled)
         {
-            this->setVisible(TRUE);
+            this->setVisible(true);
             m_processDlg->close();
             resetTable();
         }
@@ -159,19 +159,19 @@ void sudokuMain::enableIP()
 {
     if(rB_single->isChecked())
     {
-        lineEdit_IP->setVisible(FALSE);
-        progressBar_2->setVisible(FALSE);
-        label_ip->setVisible(FALSE);
-        label_p2->setVisible(FALSE);
+        lineEdit_IP->setVisible(false);
+        progressBar_2->setVisible(false);
+        label_ip->setVisible(false);
+        label_p2->setVisible(false);
         label_p1->setText(QString(tr("^_^ :")));
         label_p2->setText(QString(tr("")));
     }
     else if(rB_online->isChecked())
     {
-        lineEdit_IP->setVisible(TRUE);
-        progressBar_2->setVisible(TRUE);
-        label_ip->setVisible(TRUE);
-        label_p2->setVisible(TRUE);
+        lineEdit_IP->setVisible(true);
+        progressBar_2->setVisible(true);
+        label_ip->setVisible(true);
+        label_p2->setVisible(true);
         label_p1->setText(QString(tr("己方:")));
         label_p2->setText(QString(tr("对方:")));
     }
@@ -191,7 +191,7 @@ void sudokuMain::showTable()
                 //Show Table
                 pB = getPointFromPosition(L+1,R+1);
                 setButtonNum(pB,table[L][R][0],40);
-                pB->setFlat(TRUE);
+                pB->setFlat(true);
                 writable[L][R] = 0;
             }
         }
@@ -207,17 +207,17 @@ void sudokuMain::showTable()
     }
     int val = (int)(100*(1-(float)m_blankNumber/(float)m_totalBlank));
     progressBar_1->setValue(val);
-    m_bLocked = FALSE;
-    pB_setTable->setHidden(TRUE);
-    pB_fileSet->setHidden(TRUE);
-    pB_autoSet->setHidden(TRUE);
-    pB_start->setHidden(FALSE);
-    pB_resetTable->setHidden(FALSE);
-    pB_giveUp->setHidden(FALSE);
-    pB_resetTable->setDisabled(FALSE);
-    pB_start->setDisabled(FALSE);
-    pB_giveUp->setDisabled(TRUE);
-    m_processDlg->m_bConnected = TRUE;
+    m_bLocked = false;
+    pB_setTable->setHidden(true);
+    pB_fileSet->setHidden(true);
+    pB_autoSet->setHidden(true);
+    pB_start->setHidden(false);
+    pB_resetTable->setHidden(false);
+    pB_giveUp->setHidden(false);
+    pB_resetTable->setDisabled(false);
+    pB_start->setDisabled(false);
+    pB_giveUp->setDisabled(true);
+    m_processDlg->m_bConnected = true;
     startGame();
 }
 
@@ -265,7 +265,7 @@ void sudokuMain::processPendingDatagrams()
     }
     else if(val==MES_REJECT && rB_online->isChecked())
     {
-        m_processDlg->m_bCanceled = TRUE;
+        m_processDlg->m_bCanceled = true;
         resetTable();
         QMessageBox re(QMessageBox::Information,QString(tr("提示")),QString(tr("对方拒绝了你的连接请求!")),QMessageBox::Ok,this,Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         re.exec();
@@ -308,7 +308,7 @@ void sudokuMain::processPendingDatagrams()
     }
     else if(val==MES_FINISH && rB_online->isChecked())
     {
-        m_processDlg->m_bConnected = TRUE;
+        m_processDlg->m_bConnected = true;
         startGame();
     }
     else if(val==MES_GIVEUP && rB_online->isChecked())
@@ -316,7 +316,7 @@ void sudokuMain::processPendingDatagrams()
         int i,j;
         main_Timer->stop();
         m_blankNumber = -1;
-        m_beginPorgressBar = FALSE;
+        m_beginPorgressBar = false;
         for(i=0;i<9;i++)
         {
             for(j=0;j<9;j++)
@@ -325,8 +325,8 @@ void sudokuMain::processPendingDatagrams()
                 setButtonNum(getPointFromPosition(i+1,j+1),table[i][j][0],40);
             }
         }
-        m_bFinished = TRUE;
-        m_processDlg->m_bConnected = FALSE;
+        m_bFinished = true;
+        m_processDlg->m_bConnected = false;
         pB_giveUp->setText(QString(tr("完成")));
         progressBar_1->setValue(100);
         QMessageBox finish(QMessageBox::Information,QString(tr("胜利")),QString(tr("你的对手向你认输了^^!")),QMessageBox::Ok,this,Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
@@ -337,7 +337,7 @@ void sudokuMain::processPendingDatagrams()
         int i,j;
         main_Timer->stop();
         m_blankNumber = -1;
-        m_beginPorgressBar = FALSE;
+        m_beginPorgressBar = false;
         for(i=0;i<9;i++)
         {
             for(j=0;j<9;j++)
@@ -346,8 +346,8 @@ void sudokuMain::processPendingDatagrams()
                 setButtonNum(getPointFromPosition(i+1,j+1),table[i][j][0],40);
             }
         }
-        m_bFinished = TRUE;
-        m_processDlg->m_bConnected = FALSE;
+        m_bFinished = true;
+        m_processDlg->m_bConnected = false;
         pB_giveUp->setText(QString(tr("失败")));
         QMessageBox finish(QMessageBox::Information,QString(tr("失败")),QString(tr("这次你败给了对手，再接再厉!")),QMessageBox::Ok,this,Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         finish.exec();

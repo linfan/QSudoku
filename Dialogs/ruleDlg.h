@@ -1,7 +1,7 @@
 #ifndef RULEDLG_H
 #define RULEDLG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "ui_rule.h"
 
 class ruleDlg : public QDialog,public Ui_rule

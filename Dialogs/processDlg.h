@@ -1,7 +1,7 @@
 #ifndef PROCESSDLG_H
 #define PROCESSDLG_H
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include <QTimer>
 #include "ui_process.h"
 

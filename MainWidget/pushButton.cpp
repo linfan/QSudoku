@@ -29,14 +29,14 @@ int sudokuMain::pushButtonDown(QPushButton *pB,int L,int R)
 {
     if(m_bFinished)
     {
-        return FALSE;
+        return false;
     }
     //qDebug()<<"m_iSetNum: "<<m_iSetNum<<endl;
     if(m_bLocked)
     {
         QMessageBox lock(QMessageBox::Information,QString(tr("提示")),QString(tr("请点击\"开始计时\"再做题!")),QMessageBox::Ok,this,Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         lock.exec();
-        return FALSE;
+        return false;
     }
     if(writable[L-1][R-1])
     {
@@ -84,13 +84,13 @@ int sudokuMain::pushButtonDown(QPushButton *pB,int L,int R)
                             m_process = (int)(100*(1-(float)m_blankNumber/(float)m_totalBlank));
                             progressBar_1->setValue(m_process);
                             sendDatagram(m_process);
-                            return FALSE;
+                            return false;
                         }
                     }
                 }
                 main_Timer->stop();
                 m_blankNumber = -1;
-                m_beginPorgressBar = FALSE;
+                m_beginPorgressBar = false;
                 pB_giveUp->setText(QString(tr("完成")));
                 sendDatagram(MES_WIN);
                 if(rB_online->isChecked())
@@ -110,16 +110,16 @@ int sudokuMain::pushButtonDown(QPushButton *pB,int L,int R)
                         writable[i][j] = 0;
                     }
                 }
-                m_bFinished = TRUE;
-                m_bLocked = TRUE;
-                return TRUE;
+                m_bFinished = true;
+                m_bLocked = true;
+                return true;
             }
         }
         m_last_click_button = 10*(L-1)+(R-1);
         m_time_between_click = 1;
         click_Timer->start(100);
     }
-    return FALSE;
+    return false;
 }
 
 void sudokuMain::clearButton(QPushButton *pB,int L,int R)
