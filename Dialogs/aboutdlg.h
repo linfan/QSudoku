@@ -5,11 +5,10 @@
 #include "ui_aboutdlg.h"
 
 namespace Ui {
-    class aboutDlg;
+class aboutDlg;
 }
 
-class aboutDlg : public QDialog,public Ui_aboutDlg
-{
+class aboutDlg : public QDialog, public Ui_aboutDlg {
     Q_OBJECT
 public:
     aboutDlg(QWidget *parent = 0);

@@ -4,8 +4,7 @@
 #include <QtWidgets/QDialog>
 #include "ui_explanatry.h"
 
-class explanatryDlg : public QDialog,public Ui_explanatry
-{
+class explanatryDlg : public QDialog, public Ui_explanatry {
     Q_OBJECT
 
 public:

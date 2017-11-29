@@ -4,8 +4,7 @@
 #include <QtWidgets/QDialog>
 #include "ui_copyright.h"
 
-class copyrightDlg : public QDialog,public Ui_copyright
-{
+class copyrightDlg : public QDialog, public Ui_copyright {
     Q_OBJECT
 
 public:

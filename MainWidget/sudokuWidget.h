@@ -15,8 +15,7 @@
 
 class processDlg;
 
-class sudokuMain : public QWidget,public Ui_MainForm
-{
+class sudokuMain : public QWidget, public Ui_MainForm {
     Q_OBJECT
 
 public:
@@ -52,13 +51,13 @@ private:
     processDlg *m_processDlg;//When Connectint ,Show It
     QTimer *connect_Timer;   //To Calculate Time When Connecting
     bool m_bFinished;        //If Player Full The Table Successfully ,It Will Be Set
-    int pushButtonDown(QPushButton *pB,int L,int R);
-    void sideButtonDown(QPushButton *pB,int num);
-    void clearButton(QPushButton *pB,int L,int R);
-    QPushButton* getPointFromPosition(int L,int R);
+    int pushButtonDown(QPushButton *pB, int L, int R);
+    void sideButtonDown(QPushButton *pB, int num);
+    void clearButton(QPushButton *pB, int L, int R);
+    QPushButton* getPointFromPosition(int L, int R);
     QPushButton* getPointFromNumber(int num);
-    int GetSolution(int table[9][9][10],int solution[9][9]);
-    void setButtonNum(QPushButton *pB,int Num,int size);
+    int GetSolution(int table[9][9][10], int solution[9][9]);
+    void setButtonNum(QPushButton *pB, int Num, int size);
     void sendDatagram(int message);
     void showTable();
 private slots:

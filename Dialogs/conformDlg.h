@@ -6,11 +6,10 @@
 #include "ui_conform.h"
 
 namespace Ui {
-    class conformDlg;
+class conformDlg;
 }
 
-class conformDlg : public QDialog,public Ui_conformDlg
-{
+class conformDlg : public QDialog, public Ui_conformDlg {
     Q_OBJECT
 public:
     conformDlg(QWidget *parent = 0);

@@ -6,11 +6,10 @@
 #include "ui_process.h"
 
 namespace Ui {
-    class processDlg;
+class processDlg;
 }
 
-class processDlg : public QDialog,public Ui_processDlg
-{
+class processDlg : public QDialog, public Ui_processDlg {
     Q_OBJECT
 public:
     processDlg(QWidget *parent = 0);
