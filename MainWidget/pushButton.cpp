@@ -546,28 +546,11 @@ void sudokuMain::pBk99()
 
 QPushButton* sudokuMain::getPointFromNumber(int num)
 {
-    switch(num)
-    {
-        case 1:
-        return pB1;
-        case 2:
-        return pB2;
-        case 3:
-        return pB3;
-        case 4:
-        return pB4;
-        case 5:
-        return pB5;
-        case 6:
-        return pB6;
-        case 7:
-        return pB7;
-        case 8:
-        return pB8;
-        case 9:
-        return pB9;
+    QPushButton* numBtns[] = { NULL, pB1, pB2, pB3, pB4, pB5, pB6, pB7, pB8, pB9 };
+    if (num >= 1 && num <= 9) {
+        return numBtns[num];
     }
-    return 0;
+    return numBtns[0];
 }
 
 void sudokuMain::sideButtonDown(QPushButton *pB,int num)
@@ -582,9 +565,9 @@ void sudokuMain::sideButtonDown(QPushButton *pB,int num)
         lock.exec();
         return;
     }
-    if(m_iSetNum!=num)
+    if(m_iSetNum != num)
     {
-        if(m_iSetNum!=0)
+        if(m_iSetNum != 0)
         {
             QPushButton *pB_side = getPointFromNumber(m_iSetNum);
             pB_side->setIconSize(QSize(30,30));

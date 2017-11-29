@@ -99,9 +99,9 @@ void sudokuMain::changeTheme(const QString & text)
         setButtonNum(pB9,9,30);
         int i,j;
         QPushButton *pB;
-        for(i=0;i<9;i++)
+        for(i=0; i<9; i++)
         {
-            for(j=0;j<9;j++)
+            for(j=0; j<9; j++)
             {
                 if(table[i][j][0]!=0)
                 {
@@ -110,7 +110,7 @@ void sudokuMain::changeTheme(const QString & text)
                 }
             }
         }
-        if(m_iSetNum!=0)
+        if(m_iSetNum != 0)
         {
             QPushButton *pB_side = getPointFromNumber(m_iSetNum);
             pB_side->setIconSize(QSize(40,40));
