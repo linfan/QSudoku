@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>conformDlg</class>
+ <widget class="QDialog" name="conformDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>298</width>
+    <height>109</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>298</width>
+    <height>109</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>298</width>
+    <height>109</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>[请求连接]</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../Resource/sudoku.qrc">
+    <normaloff>:/png/sudoku.png</normaloff>:/png/sudoku.png</iconset>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>20</y>
+     <width>231</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>收到对方连接请求，是否同意连接？</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pB_reject">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>60</y>
+     <width>92</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>拒绝</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pB_conform">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>60</y>
+     <width>92</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>同意</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../Resource/sudoku.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pB_conform</sender>
+   <signal>clicked()</signal>
+   <receiver>conformDlg</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>148</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
