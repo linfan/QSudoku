@@ -115,105 +115,30 @@ sudokuMain::sudokuMain(QWidget *parent)
     connect(pB_help, SIGNAL(clicked()), this, SLOT(expanatry()));
     connect(pB_win, SIGNAL(clicked()), this, SLOT(win()));
 
-    connect(pB11, SIGNAL(clicked()), this, SLOT(pBk11()));
-    connect(pB12, SIGNAL(clicked()), this, SLOT(pBk12()));
-    connect(pB13, SIGNAL(clicked()), this, SLOT(pBk13()));
-    connect(pB14, SIGNAL(clicked()), this, SLOT(pBk14()));
-    connect(pB15, SIGNAL(clicked()), this, SLOT(pBk15()));
-    connect(pB16, SIGNAL(clicked()), this, SLOT(pBk16()));
-    connect(pB17, SIGNAL(clicked()), this, SLOT(pBk17()));
-    connect(pB18, SIGNAL(clicked()), this, SLOT(pBk18()));
-    connect(pB19, SIGNAL(clicked()), this, SLOT(pBk19()));
+    QPushButton* sideBtns[9] = { pB1, pB2, pB3, pB4, pB5, pB6, pB7, pB8, pB9 };
+    QPushButton* btnMap[9][9] = {{ pB11, pB12, pB13, pB14, pB15, pB16, pB17, pB18, pB19 },
+                                 { pB21, pB22, pB23, pB24, pB25, pB26, pB27, pB28, pB29 },
+                                 { pB31, pB32, pB33, pB34, pB35, pB36, pB37, pB38, pB39 },
+                                 { pB41, pB42, pB43, pB44, pB45, pB46, pB47, pB48, pB49 },
+                                 { pB51, pB52, pB53, pB54, pB55, pB56, pB57, pB58, pB59 },
+                                 { pB61, pB62, pB63, pB64, pB65, pB66, pB67, pB68, pB69 },
+                                 { pB71, pB72, pB73, pB74, pB75, pB76, pB77, pB78, pB79 },
+                                 { pB81, pB82, pB83, pB84, pB85, pB86, pB87, pB88, pB89 },
+                                 { pB91, pB92, pB93, pB94, pB95, pB96, pB97, pB98, pB99 }};
 
-    connect(pB21, SIGNAL(clicked()), this, SLOT(pBk21()));
-    connect(pB22, SIGNAL(clicked()), this, SLOT(pBk22()));
-    connect(pB23, SIGNAL(clicked()), this, SLOT(pBk23()));
-    connect(pB24, SIGNAL(clicked()), this, SLOT(pBk24()));
-    connect(pB25, SIGNAL(clicked()), this, SLOT(pBk25()));
-    connect(pB26, SIGNAL(clicked()), this, SLOT(pBk26()));
-    connect(pB27, SIGNAL(clicked()), this, SLOT(pBk27()));
-    connect(pB28, SIGNAL(clicked()), this, SLOT(pBk28()));
-    connect(pB29, SIGNAL(clicked()), this, SLOT(pBk29()));
+    for (int i = 0; i < 9; i++) {
+        connect(sideBtns[i], &QPushButton::clicked, [=]() {
+            sideButtonDown(sideBtns[i], i + 1);
+        });
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            connect(btnMap[i][j], &QPushButton::clicked, [=]() {
+                pushButtonDown(btnMap[i][j], i + 1, j + 1);
+            });
+        }
+    }
 
-    connect(pB31, SIGNAL(clicked()), this, SLOT(pBk31()));
-    connect(pB32, SIGNAL(clicked()), this, SLOT(pBk32()));
-    connect(pB33, SIGNAL(clicked()), this, SLOT(pBk33()));
-    connect(pB34, SIGNAL(clicked()), this, SLOT(pBk34()));
-    connect(pB35, SIGNAL(clicked()), this, SLOT(pBk35()));
-    connect(pB36, SIGNAL(clicked()), this, SLOT(pBk36()));
-    connect(pB37, SIGNAL(clicked()), this, SLOT(pBk37()));
-    connect(pB38, SIGNAL(clicked()), this, SLOT(pBk38()));
-    connect(pB39, SIGNAL(clicked()), this, SLOT(pBk39()));
-
-    connect(pB41, SIGNAL(clicked()), this, SLOT(pBk41()));
-    connect(pB42, SIGNAL(clicked()), this, SLOT(pBk42()));
-    connect(pB43, SIGNAL(clicked()), this, SLOT(pBk43()));
-    connect(pB44, SIGNAL(clicked()), this, SLOT(pBk44()));
-    connect(pB45, SIGNAL(clicked()), this, SLOT(pBk45()));
-    connect(pB46, SIGNAL(clicked()), this, SLOT(pBk46()));
-    connect(pB47, SIGNAL(clicked()), this, SLOT(pBk47()));
-    connect(pB48, SIGNAL(clicked()), this, SLOT(pBk48()));
-    connect(pB49, SIGNAL(clicked()), this, SLOT(pBk49()));
-
-    connect(pB51, SIGNAL(clicked()), this, SLOT(pBk51()));
-    connect(pB52, SIGNAL(clicked()), this, SLOT(pBk52()));
-    connect(pB53, SIGNAL(clicked()), this, SLOT(pBk53()));
-    connect(pB54, SIGNAL(clicked()), this, SLOT(pBk54()));
-    connect(pB55, SIGNAL(clicked()), this, SLOT(pBk55()));
-    connect(pB56, SIGNAL(clicked()), this, SLOT(pBk56()));
-    connect(pB57, SIGNAL(clicked()), this, SLOT(pBk57()));
-    connect(pB58, SIGNAL(clicked()), this, SLOT(pBk58()));
-    connect(pB59, SIGNAL(clicked()), this, SLOT(pBk59()));
-
-    connect(pB61, SIGNAL(clicked()), this, SLOT(pBk61()));
-    connect(pB62, SIGNAL(clicked()), this, SLOT(pBk62()));
-    connect(pB63, SIGNAL(clicked()), this, SLOT(pBk63()));
-    connect(pB64, SIGNAL(clicked()), this, SLOT(pBk64()));
-    connect(pB65, SIGNAL(clicked()), this, SLOT(pBk65()));
-    connect(pB66, SIGNAL(clicked()), this, SLOT(pBk66()));
-    connect(pB67, SIGNAL(clicked()), this, SLOT(pBk67()));
-    connect(pB68, SIGNAL(clicked()), this, SLOT(pBk68()));
-    connect(pB69, SIGNAL(clicked()), this, SLOT(pBk69()));
-
-    connect(pB71, SIGNAL(clicked()), this, SLOT(pBk71()));
-    connect(pB72, SIGNAL(clicked()), this, SLOT(pBk72()));
-    connect(pB73, SIGNAL(clicked()), this, SLOT(pBk73()));
-    connect(pB74, SIGNAL(clicked()), this, SLOT(pBk74()));
-    connect(pB75, SIGNAL(clicked()), this, SLOT(pBk75()));
-    connect(pB76, SIGNAL(clicked()), this, SLOT(pBk76()));
-    connect(pB77, SIGNAL(clicked()), this, SLOT(pBk77()));
-    connect(pB78, SIGNAL(clicked()), this, SLOT(pBk78()));
-    connect(pB79, SIGNAL(clicked()), this, SLOT(pBk79()));
-
-    connect(pB81, SIGNAL(clicked()), this, SLOT(pBk81()));
-    connect(pB82, SIGNAL(clicked()), this, SLOT(pBk82()));
-    connect(pB83, SIGNAL(clicked()), this, SLOT(pBk83()));
-    connect(pB84, SIGNAL(clicked()), this, SLOT(pBk84()));
-    connect(pB85, SIGNAL(clicked()), this, SLOT(pBk85()));
-    connect(pB86, SIGNAL(clicked()), this, SLOT(pBk86()));
-    connect(pB87, SIGNAL(clicked()), this, SLOT(pBk87()));
-    connect(pB88, SIGNAL(clicked()), this, SLOT(pBk88()));
-    connect(pB89, SIGNAL(clicked()), this, SLOT(pBk89()));
-
-    connect(pB91, SIGNAL(clicked()), this, SLOT(pBk91()));
-    connect(pB92, SIGNAL(clicked()), this, SLOT(pBk92()));
-    connect(pB93, SIGNAL(clicked()), this, SLOT(pBk93()));
-    connect(pB94, SIGNAL(clicked()), this, SLOT(pBk94()));
-    connect(pB95, SIGNAL(clicked()), this, SLOT(pBk95()));
-    connect(pB96, SIGNAL(clicked()), this, SLOT(pBk96()));
-    connect(pB97, SIGNAL(clicked()), this, SLOT(pBk97()));
-    connect(pB98, SIGNAL(clicked()), this, SLOT(pBk98()));
-    connect(pB99, SIGNAL(clicked()), this, SLOT(pBk99()));
-
-    connect(pB1, SIGNAL(clicked()), this, SLOT(pBk1()));
-    connect(pB2, SIGNAL(clicked()), this, SLOT(pBk2()));
-    connect(pB3, SIGNAL(clicked()), this, SLOT(pBk3()));
-    connect(pB4, SIGNAL(clicked()), this, SLOT(pBk4()));
-    connect(pB5, SIGNAL(clicked()), this, SLOT(pBk5()));
-    connect(pB6, SIGNAL(clicked()), this, SLOT(pBk6()));
-    connect(pB7, SIGNAL(clicked()), this, SLOT(pBk7()));
-    connect(pB8, SIGNAL(clicked()), this, SLOT(pBk8()));
-    connect(pB9, SIGNAL(clicked()), this, SLOT(pBk9()));
 }
 
 sudokuMain::~sudokuMain() {

@@ -21,6 +21,7 @@ class sudokuMain : public QWidget, public Ui_MainForm {
 public:
     sudokuMain(QWidget *parent = 0);
     ~sudokuMain();
+
 private:
     int m_iSetNum;           //The Number To Put Into The Table
     QTimer *main_Timer;      //Timer Clock
@@ -76,106 +77,6 @@ private slots:
     void expanatry();
     void processPendingDatagrams();
     void win();
-
-    void pBk11();
-    void pBk12();
-    void pBk13();
-    void pBk14();
-    void pBk15();
-    void pBk16();
-    void pBk17();
-    void pBk18();
-    void pBk19();
-
-    void pBk21();
-    void pBk22();
-    void pBk23();
-    void pBk24();
-    void pBk25();
-    void pBk26();
-    void pBk27();
-    void pBk28();
-    void pBk29();
-
-    void pBk31();
-    void pBk32();
-    void pBk33();
-    void pBk34();
-    void pBk35();
-    void pBk36();
-    void pBk37();
-    void pBk38();
-    void pBk39();
-
-    void pBk41();
-    void pBk42();
-    void pBk43();
-    void pBk44();
-    void pBk45();
-    void pBk46();
-    void pBk47();
-    void pBk48();
-    void pBk49();
-
-    void pBk51();
-    void pBk52();
-    void pBk53();
-    void pBk54();
-    void pBk55();
-    void pBk56();
-    void pBk57();
-    void pBk58();
-    void pBk59();
-
-    void pBk61();
-    void pBk62();
-    void pBk63();
-    void pBk64();
-    void pBk65();
-    void pBk66();
-    void pBk67();
-    void pBk68();
-    void pBk69();
-
-    void pBk71();
-    void pBk72();
-    void pBk73();
-    void pBk74();
-    void pBk75();
-    void pBk76();
-    void pBk77();
-    void pBk78();
-    void pBk79();
-
-    void pBk81();
-    void pBk82();
-    void pBk83();
-    void pBk84();
-    void pBk85();
-    void pBk86();
-    void pBk87();
-    void pBk88();
-    void pBk89();
-
-    void pBk91();
-    void pBk92();
-    void pBk93();
-    void pBk94();
-    void pBk95();
-    void pBk96();
-    void pBk97();
-    void pBk98();
-    void pBk99();
-
-    void pBk1();
-    void pBk2();
-    void pBk3();
-    void pBk4();
-    void pBk5();
-    void pBk6();
-    void pBk7();
-    void pBk8();
-    void pBk9();
 };
 
 #endif // _SUDOKUMAIN_H_

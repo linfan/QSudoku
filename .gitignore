@@ -4,7 +4,6 @@
 # Temporary files
 *~
 *.orig
-MediumFiles/
 
 # Prerequisites
 *.d
