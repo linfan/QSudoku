@@ -71,7 +71,7 @@ void explanatryDlg::switchPage() {
 }
 
 void explanatryDlg::next() {
-    if (m_page==10) {
+    if (m_page == 10) {
         pBR->setVisible(false);
     } else {
         m_page++;
@@ -82,7 +82,7 @@ void explanatryDlg::next() {
 }
 
 void explanatryDlg::previous() {
-    if (m_page==1) {
+    if (m_page == 1) {
         pBL->setVisible(false);
     } else {
         m_page--;

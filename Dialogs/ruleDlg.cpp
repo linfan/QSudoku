@@ -69,7 +69,7 @@ void ruleDlg::switchPage() {
 }
 
 void ruleDlg::next() {
-    if (m_page==7) {
+    if (m_page == 7) {
         pBR->setVisible(false);
     } else {
         m_page++;
@@ -80,7 +80,7 @@ void ruleDlg::next() {
 }
 
 void ruleDlg::previous() {
-    if (m_page==1) {
+    if (m_page == 1) {
         pBL->setVisible(false);
     } else {
         m_page--;

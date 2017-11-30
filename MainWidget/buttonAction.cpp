@@ -15,11 +15,11 @@
 void sudokuMain::resetTable() {
     int i, j;
     QPushButton *pB;
-    for (i=0; i<9; i++) {
-        for (j=0; j<9; j++) {
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 9; j++) {
             table[i][j][0] = 0;
             writable[i][j] = true;
-            pB = getPointFromPosition(i+1, j+1);
+            pB = getPointFromPosition(i + 1, j + 1);
             setButtonNum(pB, 0, 40);
             pB->setFlat(false);
         }
@@ -43,10 +43,10 @@ void sudokuMain::autoSet() {
     if (rB_online->isChecked()) {
         QMessageBox box(QMessageBox::Information, QString(tr("联机对战")),
                         QString(tr("确认开始连接对方主机?")),
-                        QMessageBox::Ok|QMessageBox::Cancel, this,
+                        QMessageBox::Ok | QMessageBox::Cancel, this,
                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         box.exec();
-        if (box.clickedButton()==box.button(QMessageBox::Cancel)) {
+        if (box.clickedButton() == box.button(QMessageBox::Cancel)) {
             return;
         }
     }
@@ -56,8 +56,8 @@ void sudokuMain::autoSet() {
     int index, num;
     int select[9], select_from_6[6], select_from_4[4];
     int pos[4] = {11, 12, 21, 22}, L, R;
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
             table[L][R][0] = 0;
         }
     }
@@ -68,90 +68,90 @@ void sudokuMain::autoSet() {
     } else if (rB_hard->isChecked()) {
         blankGridNum = 45;
     }
-    qsrand((QTime::currentTime()).second()*(QTime::currentTime()).minute());
+    qsrand((QTime::currentTime()).second() * (QTime::currentTime()).minute());
     //Fill The Frist Row
-    for (index=0; index<9; index++) {
-        select[index] = index+1;
+    for (index = 0; index < 9; index++) {
+        select[index] = index + 1;
     }
     baseNum = 9;
-    for (index=0; index<9; index++) {
-        randNum = qAbs(qrand()%baseNum);//Get A Number Between 0 To baseNum-1
+    for (index = 0; index < 9; index++) {
+        randNum = qAbs(qrand() % baseNum); //Get A Number Between 0 To baseNum-1
         table[0][index][0] = select[randNum];
         baseNum--;
-        select[randNum] = select[8-index];
-        select[8-index] = 0;
+        select[randNum] = select[8 - index];
+        select[8 - index] = 0;
     }
     //qDebug()<<table[0][0][0]<<' '<<table[0][1][0]<<' '<<table[0][2][0]<<' '<<table[0][3][0]<<' '<<table[0][4][0]<<' '<<table[0][5][0]<<' '<<table[0][6][0]<<' '<<table[0][7][0]<<' '<<table[0][8][0]<<' ';
     //Fill The Frist Volumn
     //Frist Fill table[0][0][0] To table[2][0][0]
     qsrand(qrand());
-    index=0;
-    for (num=1; num<=9; num++) {
-        if (num!=table[0][0][0] && num!=table[0][1][0] && num!=table[0][2][0]) {
+    index = 0;
+    for (num = 1; num <= 9; num++) {
+        if (num != table[0][0][0] && num != table[0][1][0] && num != table[0][2][0]) {
             select_from_6[index] = num;
             index++;
         }
     }
     baseNum = 6;
-    for (index=1; index<=2; index++) {
-        randNum = qAbs(qrand()%baseNum);//Get A Number Between 0 To baseNum-1
+    for (index = 1; index <= 2; index++) {
+        randNum = qAbs(qrand() % baseNum); //Get A Number Between 0 To baseNum-1
         table[index][0][0] = select_from_6[randNum];
         baseNum--;
-        select_from_6[randNum] = select_from_6[6-index];
-        select_from_6[6-index] = 0;
+        select_from_6[randNum] = select_from_6[6 - index];
+        select_from_6[6 - index] = 0;
     }
     //Then table[3][0][0] To table[8][0][0]
     qsrand(qrand());
-    index=0;
-    for (num=1; num<=9; num++) {
-        if (num!=table[0][0][0] && num!=table[1][0][0] && num!=table[2][0][0]) {
+    index = 0;
+    for (num = 1; num <= 9; num++) {
+        if (num != table[0][0][0] && num != table[1][0][0] && num != table[2][0][0]) {
             select_from_6[index] = num;
             index++;
         }
     }
     baseNum = 6;
-    for (index=3; index<9; index++) {
-        randNum = qAbs(qrand()%baseNum);//Get A Number Between 0 To baseNum-1
+    for (index = 3; index < 9; index++) {
+        randNum = qAbs(qrand() % baseNum); //Get A Number Between 0 To baseNum-1
         table[index][0][0] = select_from_6[randNum];
         baseNum--;
-        select_from_6[randNum] = select_from_6[8-index];
-        select_from_6[8-index] = 0;
+        select_from_6[randNum] = select_from_6[8 - index];
+        select_from_6[8 - index] = 0;
     }
     //qDebug()<<table[0][0][0]<<' '<<table[1][0][0]<<' '<<table[2][0][0]<<' '<<table[3][0][0]<<' '<<table[4][0][0]<<' '<<table[5][0][0]<<' '<<table[6][0][0]<<' '<<table[7][0][0]<<' '<<table[8][0][0]<<' ';
     //File The Left-Top Square
     qsrand(qrand());
-    index=0;
-    for (num=1; num<=9; num++) {
-        if (num!=table[0][0][0] && num!=table[0][1][0] && num!=table[0][2][0]
-                && num!=table[1][0][0] && num!=table[2][0][0]) {
+    index = 0;
+    for (num = 1; num <= 9; num++) {
+        if (num != table[0][0][0] && num != table[0][1][0] && num != table[0][2][0]
+                && num != table[1][0][0] && num != table[2][0][0]) {
             select_from_4[index] = num;
             index++;
         }
     }
     baseNum = 4;
-    for (index=0; index<4; index++) {
-        randNum = qAbs(qrand()%baseNum);//Get A Number Between 0 To baseNum-1
-        L = (int)(pos[index]/10);
-        R = (int)(pos[index]%10);
+    for (index = 0; index < 4; index++) {
+        randNum = qAbs(qrand() % baseNum); //Get A Number Between 0 To baseNum-1
+        L = (int)(pos[index] / 10);
+        R = (int)(pos[index] % 10);
         table[L][R][0] = select_from_4[randNum];
         baseNum--;
-        select_from_4[randNum] = select_from_4[3-index];
-        select_from_4[3-index] = 0;
+        select_from_4[randNum] = select_from_4[3 - index];
+        select_from_4[3 - index] = 0;
     }
     //qDebug()<<table[0][0][0]<<' '<<table[0][1][0]<<' '<<table[0][2][0]<<' '<<table[1][0][0]<<' '<<table[1][1][0]<<' '<<table[1][2][0]<<' '<<table[2][0][0]<<' '<<table[2][1][0]<<' '<<table[2][2][0]<<' ';
     GetSolution(table, solution);
     //Store The Table
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
             tableBackup[L][R] = table[L][R][0];
         }
     }
-    for (num=0; num<blankGridNum;) {
+    for (num = 0; num < blankGridNum;) {
         qsrand(qrand());
-        L = qrand()%9;
+        L = qrand() % 9;
         qsrand(qrand());
-        R = qrand()%9;
-        if (table[L][R][0]!=0) {
+        R = qrand() % 9;
+        if (table[L][R][0] != 0) {
             index = table[L][R][0];
             table[L][R][0] = 0;
             if (GetSolution(table, solution)) {
@@ -162,8 +162,8 @@ void sudokuMain::autoSet() {
                 //table[L][R][0] = index;
                 //qDebug()<<num<<"table["<<L<<"]["<<R<<"]Cleared";
                 //Restore The "table" Alter By "GetSolution" Function
-                for (L=0; L<9; L++) {
-                    for (R=0; R<9; R++) {
+                for (L = 0; L < 9; L++) {
+                    for (R = 0; R < 9; R++) {
                         table[L][R][0] = tableBackup[L][R];
                     }
                 }
@@ -182,10 +182,10 @@ void sudokuMain::autoSet() {
     }*/
     //Set Table
     QPushButton* pB;
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
-            if (table[L][R][0]!=0) {
-                pB = getPointFromPosition(L+1, R+1);
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
+            if (table[L][R][0] != 0) {
+                pB = getPointFromPosition(L + 1, R + 1);
                 setButtonNum(pB, table[L][R][0], 40);
                 pB->setFlat(true);
                 writable[L][R] = 0;
@@ -193,8 +193,8 @@ void sudokuMain::autoSet() {
             }
         }
     }
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
             writableLock[L][R] = writable[L][R];
             writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
@@ -222,9 +222,9 @@ void sudokuMain::autoSet() {
 void sudokuMain::giveUp() {
     int i, j;
     QPushButton *pB;
-    for (i=0; i<9; i++) {
-        for (j=0; j<9; j++) {
-            pB = getPointFromPosition(i+1, j+1);
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 9; j++) {
+            pB = getPointFromPosition(i + 1, j + 1);
             setButtonNum(pB, 0, 40);
             pB->setFlat(false);
             table[i][j][0] = 0;
@@ -260,7 +260,7 @@ void sudokuMain::startGame() {
     if (rB_online->isChecked() && !m_processDlg->m_bConnected) { //ONLINE PLAYER
         QString ip;
         ip = lineEdit_IP->text();
-        if (ip==QString(tr(("127.0.0.1")))) {
+        if (ip == QString(tr(("127.0.0.1")))) {
             resetTable();
             QMessageBox finish(QMessageBox::Information, QString(tr("提示")),
                                QString(tr("不允许连接本机与本机连接!")), QMessageBox::Ok, this,
@@ -268,7 +268,7 @@ void sudokuMain::startGame() {
             finish.exec();
             return;
         }
-        if (ip.endsWith(QString(tr(".0")))||ip.endsWith(QString(tr(".255")))) {
+        if (ip.endsWith(QString(tr(".0"))) || ip.endsWith(QString(tr(".255")))) {
             resetTable();
             QMessageBox finish(QMessageBox::Information, QString(tr("提示")),
                                QString(tr("请输入有效的对方主机地址!")), QMessageBox::Ok, this,
@@ -284,8 +284,8 @@ void sudokuMain::startGame() {
         m_processDlg->show();
         this->setVisible(false);
         sendDatagram(MES_REQUEST);//Requesting For Connect
-        for (L=0; L<9; L++) {
-            for (R=0; R<9; R++) {
+        for (L = 0; L < 9; L++) {
+            for (R = 0; R < 9; R++) {
                 writable[L][R] = writableLock[L][R];//Resume Array "writable"
             }
         }
@@ -300,10 +300,10 @@ void sudokuMain::startGame() {
         //qDebug() << "m_totalBlank: " << m_totalBlank <<endl;
         //qDebug() << "1-m_blankNumber/m_totalBlank: " << 1-(float)m_blankNumber/(float)m_totalBlank <<endl;
         GetSolution(table, solution);
-        int val = (int)(100*(1-(float)m_blankNumber/(float)m_totalBlank));
+        int val = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
         progressBar_1->setValue(val);
-        for (L=0; L<9; L++) {
-            for (R=0; R<9; R++) {
+        for (L = 0; L < 9; L++) {
+            for (R = 0; R < 9; R++) {
                 writable[L][R] = writableLock[L][R];//Resume Array "writable"
             }
         }
@@ -319,10 +319,10 @@ void sudokuMain::setTable() {
     if (rB_online->isChecked()) {
         QMessageBox box(QMessageBox::Information, QString(tr("联机对战")),
                         QString(tr("确认开始连接对方主机?")),
-                        QMessageBox::Ok|QMessageBox::Cancel, this,
+                        QMessageBox::Ok | QMessageBox::Cancel, this,
                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         box.exec();
-        if (box.clickedButton()==box.button(QMessageBox::Cancel)) {
+        if (box.clickedButton() == box.button(QMessageBox::Cancel)) {
             return;
         }
     }
@@ -338,10 +338,10 @@ void sudokuMain::setTable() {
     } else {
         //Set Table
         QPushButton* pB;
-        for (L=0; L<9; L++) {
-            for (R=0; R<9; R++) {
-                if (table[L][R][0]!=0) {
-                    pB = getPointFromPosition(L+1, R+1);
+        for (L = 0; L < 9; L++) {
+            for (R = 0; R < 9; R++) {
+                if (table[L][R][0] != 0) {
+                    pB = getPointFromPosition(L + 1, R + 1);
                     setButtonNum(pB, table[L][R][0], 40);
                     pB->setFlat(true);
                     writable[L][R] = 0;
@@ -350,8 +350,8 @@ void sudokuMain::setTable() {
             }
         }
     }
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
             writableLock[L][R] = writable[L][R];
             writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
@@ -380,10 +380,10 @@ void sudokuMain::fileSet() {
     if (rB_online->isChecked()) {
         QMessageBox box(QMessageBox::Information, QString(tr("联机对战")),
                         QString(tr("确认开始连接对方主机?")),
-                        QMessageBox::Ok|QMessageBox::Cancel, this,
+                        QMessageBox::Ok | QMessageBox::Cancel, this,
                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         box.exec();
-        if (box.clickedButton()==box.button(QMessageBox::Cancel)) {
+        if (box.clickedButton() == box.button(QMessageBox::Cancel)) {
             return;
         }
     }
@@ -393,10 +393,10 @@ void sudokuMain::fileSet() {
     QFile file(path);
     char Cr;
     file.open(QIODevice::ReadOnly);
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
             file.getChar(&Cr);
-            if (Cr<'0'||Cr>'9') {
+            if (Cr < '0' || Cr > '9') {
                 QMessageBox error(QMessageBox::Critical, QString(tr("错误")),
                                   QString(tr("文件读取出错，请确认文件内容!")), QMessageBox::Ok,
                                   this, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
@@ -419,10 +419,10 @@ void sudokuMain::fileSet() {
     } else {
         //Set Table
         QPushButton* pB;
-        for (L=0; L<9; L++) {
-            for (R=0; R<9; R++) {
-                if (table[L][R][0]!=0) {
-                    pB = getPointFromPosition(L+1, R+1);
+        for (L = 0; L < 9; L++) {
+            for (R = 0; R < 9; R++) {
+                if (table[L][R][0] != 0) {
+                    pB = getPointFromPosition(L + 1, R + 1);
                     setButtonNum(pB, table[L][R][0], 40);
                     pB->setFlat(true);
                     writable[L][R] = 0;
@@ -431,8 +431,8 @@ void sudokuMain::fileSet() {
             }
         }
     }
-    for (L=0; L<9; L++) {
-        for (R=0; R<9; R++) {
+    for (L = 0; L < 9; L++) {
+        for (R = 0; R < 9; R++) {
             writableLock[L][R] = writable[L][R];
             writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
@@ -464,10 +464,10 @@ void sudokuMain::win() {
         main_Timer->stop();
         m_blankNumber = -1;
         m_beginPorgressBar = false;
-        for (i=0; i<9; i++) {
-            for (j=0; j<9; j++) {
+        for (i = 0; i < 9; i++) {
+            for (j = 0; j < 9; j++) {
                 table[i][j][0] = solution[i][j];
-                setButtonNum(getPointFromPosition(i+1, j+1), table[i][j][0], 40);
+                setButtonNum(getPointFromPosition(i + 1, j + 1), table[i][j][0], 40);
             }
         }
         m_bFinished = true;
