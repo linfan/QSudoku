@@ -1,8 +1,8 @@
-#include "aboutdlg.h"
+#include "Aboutdlg.h"
 #include "ui_aboutdlg.h"
-#include "explanatryDlg.h"
-#include "copyrightDlg.h"
-#include "ruleDlg.h"
+#include "ExplanatryDlg.h"
+#include "CopyrightDlg.h"
+#include "RuleDlg.h"
 
 aboutDlg::aboutDlg(QWidget *parent) :
     QDialog(parent) {

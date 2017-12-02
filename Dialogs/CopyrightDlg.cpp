@@ -1,5 +1,5 @@
 #include <sstream>
-#include "copyrightDlg.h"
+#include "CopyrightDlg.h"
 
 using namespace std;
 

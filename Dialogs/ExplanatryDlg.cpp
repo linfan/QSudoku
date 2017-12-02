@@ -1,4 +1,4 @@
-#include "explanatryDlg.h"
+#include "ExplanatryDlg.h"
 #include <QString>
 
 explanatryDlg::explanatryDlg(QWidget *parent)

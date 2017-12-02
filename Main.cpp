@@ -1,6 +1,6 @@
 #include <QtWidgets/QApplication>
 #include <QtCore/QTextCodec>
-#include "MainWidget/sudokuWidget.h"
+#include "MainWidget/SudokuWidget.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);

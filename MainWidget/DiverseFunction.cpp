@@ -6,17 +6,17 @@
 #include <QMessageBox>
 #include <QHostAddress>
 #include <QUdpSocket>
-#include "sudokuWidget.h"
-#include "processDlg.h"
-#include "conformDlg.h"
+#include "SudokuWidget.h"
+#include "ProcessDlg.h"
+#include "ConformDlg.h"
 
 void sudokuMain::mainTimerUp() {
-    strTime = QString(":");
-    strTime.push_front(QString(m_iTimeMinute % 10 + '0'));
-    strTime.push_front(QString((m_iTimeMinute % 100) / 10 + '0'));
-    strTime.push_back(QString((m_iTimeSecond % 100) / 10 + '0'));
-    strTime.push_back(QString(m_iTimeSecond % 10 + '0'));
-    lcdNumber->display(QString(strTime));
+    m_strTime = QString(":");
+    m_strTime.push_front(QString(m_iTimeMinute % 10 + '0'));
+    m_strTime.push_front(QString((m_iTimeMinute % 100) / 10 + '0'));
+    m_strTime.push_back(QString((m_iTimeSecond % 100) / 10 + '0'));
+    m_strTime.push_back(QString(m_iTimeSecond % 10 + '0'));
+    lcdNumber->display(QString(m_strTime));
     m_iTimeSecond++;
     if (m_iTimeSecond >= 60) {
         m_iTimeSecond = 0;
@@ -39,7 +39,7 @@ void sudokuMain::clickTimerUp() {
 void sudokuMain::connectTimerUp() {
     if (m_processDlg->m_bCanceled || m_processDlg->m_bConnected) {
         m_processDlg->m_Timer.stop();
-        connect_Timer->stop();
+        m_connect_Timer->stop();
         if (m_processDlg->m_bConnected) {
             this->setVisible(true);
             m_processDlg->close();
@@ -81,9 +81,9 @@ void sudokuMain::changeTheme(const QString & text) {
         QPushButton *pB;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                if (table[i][j][0] != 0) {
+                if (m_table[i][j][0] != 0) {
                     pB = getPointFromPosition(i + 1, j + 1);
-                    setButtonNum(pB, table[i][j][0], 40);
+                    setButtonNum(pB, m_table[i][j][0], 40);
                 }
             }
         }
@@ -146,20 +146,20 @@ void sudokuMain::showTable() {
     QPushButton* pB;
     for (L = 0; L < 9; L++) {
         for (R = 0; R < 9; R++) {
-            if (table[L][R][0] != 0) {
+            if (m_table[L][R][0] != 0) {
                 //Show Table
                 pB = getPointFromPosition(L + 1, R + 1);
-                setButtonNum(pB, table[L][R][0], 40);
+                setButtonNum(pB, m_table[L][R][0], 40);
                 pB->setFlat(true);
-                writable[L][R] = 0;
+                m_writable[L][R] = 0;
             }
         }
     }
     for (L = 0; L < 9; L++) {
         for (R = 0; R < 9; R++) {
             //Unlock Table
-            writableLock[L][R] = writable[L][R];
-            writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
+            m_writableLock[L][R] = m_writable[L][R];
+            m_writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
         }
     }
     int val = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
@@ -182,9 +182,9 @@ void sudokuMain::processPendingDatagrams() {
     int val;
     QByteArray datagram;
     do {
-        datagram.resize(udpReceiver.pendingDatagramSize());
-        udpReceiver.readDatagram(datagram.data(), datagram.size());
-    } while (udpReceiver.hasPendingDatagrams());
+        datagram.resize(m_udpReceiver.pendingDatagramSize());
+        m_udpReceiver.readDatagram(datagram.data(), datagram.size());
+    } while (m_udpReceiver.hasPendingDatagrams());
     QDataStream in(&datagram, QIODevice::ReadOnly);
     in.setVersion(QDataStream::Qt_4_5);
     in >> val;
@@ -228,22 +228,22 @@ void sudokuMain::processPendingDatagrams() {
         out.setVersion(QDataStream::Qt_4_5);
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                out << table[i][j][0] + 1000;
+                out << m_table[i][j][0] + 1000;
             }
         }
         QString ip;
         ip = lineEdit_IP->text();
-        udpSender.writeDatagram(datagram, QHostAddress(ip), 5824);//Send The Table
+        m_udpSender.writeDatagram(datagram, QHostAddress(ip), 5824);//Send The Table
     } else if (val >= 1000 && val < 1010 && rB_online->isChecked()) {
         int i, j;
-        table[0][0][0] = val - 1000;
+        m_table[0][0][0] = val - 1000;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
                 if (i == 0 && j == 0) {
                     continue;//Ignore [0][0]
                 }
-                in >> table[i][j][0];
-                table[i][j][0] -= 1000;
+                in >> m_table[i][j][0];
+                m_table[i][j][0] -= 1000;
             }
         }
         sendDatagram(MES_FINISH);//Finish Receive Table
@@ -253,13 +253,13 @@ void sudokuMain::processPendingDatagrams() {
         startGame();
     } else if (val == MES_GIVEUP && rB_online->isChecked()) {
         int i, j;
-        main_Timer->stop();
+        m_main_Timer->stop();
         m_blankNumber = -1;
         m_beginPorgressBar = false;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                table[i][j][0] = solution[i][j];
-                setButtonNum(getPointFromPosition(i + 1, j + 1), table[i][j][0], 40);
+                m_table[i][j][0] = m_solution[i][j];
+                setButtonNum(getPointFromPosition(i + 1, j + 1), m_table[i][j][0], 40);
             }
         }
         m_bFinished = true;
@@ -272,13 +272,13 @@ void sudokuMain::processPendingDatagrams() {
         finish.exec();
     } else if (val == MES_WIN && rB_online->isChecked()) {
         int i, j;
-        main_Timer->stop();
+        m_main_Timer->stop();
         m_blankNumber = -1;
         m_beginPorgressBar = false;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                table[i][j][0] = 0;
-                setButtonNum(getPointFromPosition(i + 1, j + 1), table[i][j][0], 40);
+                m_table[i][j][0] = 0;
+                setButtonNum(getPointFromPosition(i + 1, j + 1), m_table[i][j][0], 40);
             }
         }
         m_bFinished = true;
@@ -299,5 +299,5 @@ void sudokuMain::sendDatagram(int message) {
 
     QString ip;
     ip = lineEdit_IP->text();
-    udpSender.writeDatagram(datagram, QHostAddress(ip), 5824);
+    m_udpSender.writeDatagram(datagram, QHostAddress(ip), 5824);
 }

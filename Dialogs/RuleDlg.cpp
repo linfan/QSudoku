@@ -1,4 +1,4 @@
-#include "ruleDlg.h"
+#include "RuleDlg.h"
 #include <QPixmap>
 
 ruleDlg::ruleDlg(QWidget *parent)

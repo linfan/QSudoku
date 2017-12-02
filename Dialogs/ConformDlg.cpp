@@ -1,4 +1,4 @@
-#include "conformDlg.h"
+#include "ConformDlg.h"
 #include "ui_conform.h"
 
 conformDlg::conformDlg(QWidget *parent) :

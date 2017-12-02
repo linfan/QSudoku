@@ -11,14 +11,15 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += Dialogs/ruleDlg.h \
-    Dialogs/processDlg.h \
-    Dialogs/explanatryDlg.h \
-    Dialogs/copyrightDlg.h \
-    Dialogs/aboutdlg.h \
-    Dialogs/conformDlg.h \
-    MainWidget/sudokuWidget.h \
-    Logic/linkList.h
+HEADERS += \
+    Dialogs/Aboutdlg.h \
+    Dialogs/ConformDlg.h \
+    Dialogs/CopyrightDlg.h \
+    Dialogs/ExplanatryDlg.h \
+    Dialogs/ProcessDlg.h \
+    Dialogs/RuleDlg.h \
+    Logic/LinkList.h \
+    MainWidget/SudokuWidget.h
 FORMS += Dialogs/rule.ui \
     Dialogs/process.ui \
     Dialogs/explanatry.ui \
@@ -27,18 +28,18 @@ FORMS += Dialogs/rule.ui \
     Dialogs/conform.ui \
     MainWidget/sudokuWidget.ui
 SOURCES += Main.cpp \
-    Dialogs/ruleDlg.cpp \
-    Dialogs/processDlg.cpp \
-    Dialogs/explanatryDlg.cpp \
-    Dialogs/copyrightDlg.cpp \
-    Dialogs/aboutdlg.cpp \
-    Dialogs/conformDlg.cpp \
-    MainWidget/pushButton.cpp \
-    MainWidget/buttonAction.cpp \
-    MainWidget/diverseFunction.cpp \
-    MainWidget/sudokuWidget.cpp \
-    MainWidget/sudoku.cpp \
-    Logic/linkList.cpp
+    Dialogs/Aboutdlg.cpp \
+    Dialogs/ConformDlg.cpp \
+    Dialogs/CopyrightDlg.cpp \
+    Logic/LinkList.cpp \
+    Dialogs/ExplanatryDlg.cpp \
+    Dialogs/ProcessDlg.cpp \
+    Dialogs/RuleDlg.cpp \
+    MainWidget/ButtonAction.cpp \
+    MainWidget/DiverseFunction.cpp \
+    MainWidget/PushButton.cpp \
+    MainWidget/Sudoku.cpp \
+    MainWidget/SudokuWidget.cpp
 QT += network widgets
 RESOURCES += Resource/sudoku.qrc
 OTHER_FILES += MainWidget/nearlyFinish.table

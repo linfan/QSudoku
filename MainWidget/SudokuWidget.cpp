@@ -2,21 +2,21 @@
 #include <QtCore/QTextCodec>
 #include <QString>
 #include "ui_sudokuWidget.h"
-#include "sudokuWidget.h"
-#include "processDlg.h"
-#include "conformDlg.h"
+#include "SudokuWidget.h"
+#include "ProcessDlg.h"
+#include "ConformDlg.h"
 
 sudokuMain::sudokuMain(QWidget *parent)
     : QWidget(parent) {
     setupUi(this);
     m_iSetNum = 0;
-    strTime = QString("00:00");
+    m_strTime = QString("00:00");
     m_iTimeSecond = 0;
     m_iTimeMinute = 0;
     m_last_click_button = 0;
     m_time_between_click = 0;
-    main_Timer = new QTimer(this);
-    click_Timer = new QTimer(this);
+    m_main_Timer = new QTimer(this);
+    m_click_Timer = new QTimer(this);
     rB_normal->setChecked(true);
     rB_single->setChecked(true);
     lineEdit_IP->setVisible(false);
@@ -25,13 +25,13 @@ sudokuMain::sudokuMain(QWidget *parent)
     label_ip->setVisible(false);
     label_p2->setVisible(false);
     m_processDlg = new processDlg(this);
-    connect_Timer = new QTimer(this);
+    m_connect_Timer = new QTimer(this);
     label_p1->setText(QString(tr("^_^ :")));
     label_p2->setText(QString(tr("")));
     this->setMinimumSize(914, 618);
     this->setMaximumSize(914, 618);
 
-    udpReceiver.bind(5824);//Bind With Specified Port
+    m_udpReceiver.bind(5824);//Bind With Specified Port
 
     m_cTheme = 'N';
     m_curTheme = QString(tr("数字"));
@@ -70,17 +70,17 @@ sudokuMain::sudokuMain(QWidget *parent)
 
     m_iTimeSecond = 0;
     m_iTimeMinute = 0;
-    strTime = QString("00:00");
-    lcdNumber->display(QString(strTime));
+    m_strTime = QString("00:00");
+    lcdNumber->display(QString(m_strTime));
 
     int L, R, V;
     for (L = 0; L < 9; L++) {
         for (R = 0; R < 9; R++) {
             for (V = 0; V < 10; V++) {
-                table[L][R][V] = 0;
+                m_table[L][R][V] = 0;
             }
-            writable[L][R] = 1;
-            setted[L][R] = 0;
+            m_writable[L][R] = 1;
+            m_setted[L][R] = 0;
         }
     }
 
@@ -94,10 +94,10 @@ sudokuMain::sudokuMain(QWidget *parent)
     setButtonNum(pB8, 8, 30);
     setButtonNum(pB9, 9, 30);
 
-    connect(click_Timer, SIGNAL(timeout()), this, SLOT(clickTimerUp()));
-    connect(main_Timer, SIGNAL(timeout()), this, SLOT(mainTimerUp()));
-    connect(connect_Timer, SIGNAL(timeout()), this, SLOT(connectTimerUp()));
-    connect(&udpReceiver, SIGNAL(readyRead()), this,
+    connect(m_click_Timer, SIGNAL(timeout()), this, SLOT(clickTimerUp()));
+    connect(m_main_Timer, SIGNAL(timeout()), this, SLOT(mainTimerUp()));
+    connect(m_connect_Timer, SIGNAL(timeout()), this, SLOT(connectTimerUp()));
+    connect(&m_udpReceiver, SIGNAL(readyRead()), this,
             SLOT(processPendingDatagrams()));
 
     connect(pB_start, SIGNAL(clicked()), this, SLOT(startGame()));
@@ -136,9 +136,9 @@ sudokuMain::sudokuMain(QWidget *parent)
 }
 
 sudokuMain::~sudokuMain() {
-    delete main_Timer;
-    delete click_Timer;
-    delete connect_Timer;
+    delete m_main_Timer;
+    delete m_click_Timer;
+    delete m_connect_Timer;
     delete m_processDlg;
 }
 

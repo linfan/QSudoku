@@ -2,7 +2,7 @@
 #include <QMessageBox>
 #include <QString>
 #include <QTimer>
-#include "sudokuWidget.h"
+#include "SudokuWidget.h"
 
 void sudokuMain::setButtonNum(QPushButton *pB, int Num, int size) {
     if (Num == 0) {
@@ -38,45 +38,45 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
     if (!checkGameAlreadyBegin()) {
         return false;
     }
-    if (writable[L - 1][R - 1]) {
-        click_Timer->stop();
+    if (m_writable[L - 1][R - 1]) {
+        m_click_Timer->stop();
         if (m_time_between_click != 0
                 && m_last_click_button == 10 * (L - 1) + (R - 1)) { // Double click
-            table[L - 1][R - 1][0] = 0;
+            m_table[L - 1][R - 1][0] = 0;
             clearButton(pB, L, R);
-            if (m_beginPorgressBar && m_iSetNum != 0 && setted[L - 1][R - 1] == 1) {
+            if (m_beginPorgressBar && m_iSetNum != 0 && m_setted[L - 1][R - 1] == 1) {
                 m_blankNumber++;
-                setted[L - 1][R - 1] = 0;
+                m_setted[L - 1][R - 1] = 0;
                 m_process = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
                 progressBar_1->setValue(m_process);
                 sendDatagram(m_process);
             }
         } else { // Single click
-            table[L - 1][R - 1][0] = m_iSetNum;
+            m_table[L - 1][R - 1][0] = m_iSetNum;
             setButtonNum(pB, m_iSetNum, 40);
-            if (m_beginPorgressBar && m_iSetNum != 0 && setted[L - 1][R - 1] == 0) {
+            if (m_beginPorgressBar && m_iSetNum != 0 && m_setted[L - 1][R - 1] == 0) {
                 m_blankNumber--;
-                setted[L - 1][R - 1] = 1;
+                m_setted[L - 1][R - 1] = 1;
                 m_process = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
                 progressBar_1->setValue(m_process);
                 sendDatagram(m_process);
             }
             if (m_blankNumber == 0) { // Matrix complete, check result
-                if (!matrixEqual(table, solution)) {
+                if (!matrixEqual(m_table, m_solution)) {
                     QMessageBox fail(QMessageBox::Information, QString(tr("提示")),
                                      QString(tr("不正确,再仔细想想-_-!")), QMessageBox::Ok, this,
                                      Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
                     fail.exec();
-                    table[L - 1][R - 1][0] = 0;
+                    m_table[L - 1][R - 1][0] = 0;
                     clearButton(pB, L, R);
                     m_blankNumber = 1;
-                    setted[L - 1][R - 1] = 0;
+                    m_setted[L - 1][R - 1] = 0;
                     m_process = (int)(100 * (1 - 1.0 / m_totalBlank));
                     progressBar_1->setValue(m_process);
                     sendDatagram(m_process);
                     return false;
                 }
-                main_Timer->stop();
+                m_main_Timer->stop();
                 m_blankNumber = -1;
                 m_beginPorgressBar = false;
                 pB_giveUp->setText(QString(tr("完成")));
@@ -94,7 +94,7 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
                 }
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
-                        writable[i][j] = 0;
+                        m_writable[i][j] = 0;
                     }
                 }
                 m_bFinished = true;
@@ -104,7 +104,7 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
         }
         m_last_click_button = 10 * (L - 1) + (R - 1);
         m_time_between_click = 1;
-        click_Timer->start(100);
+        m_click_Timer->start(100);
     }
     return false;
 }
@@ -121,8 +121,8 @@ bool sudokuMain::matrixEqual(int table[9][9][10], int solution[9][9]) {
 }
 
 void sudokuMain::clearButton(QPushButton *pB, int L, int R) {
-    if (writable[L - 1][R - 1]) {
-        table[L - 1][R - 1][0] = 0;
+    if (m_writable[L - 1][R - 1]) {
+        m_table[L - 1][R - 1][0] = 0;
         setButtonNum(pB, 0, 40);
     }
 }

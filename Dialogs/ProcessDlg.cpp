@@ -1,4 +1,4 @@
-#include "processDlg.h"
+#include "ProcessDlg.h"
 #include "ui_process.h"
 #include <QMessageBox>
 #include <QString>

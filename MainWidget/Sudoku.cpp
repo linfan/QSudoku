@@ -1,9 +1,9 @@
 #include <QDebug>
-#include "sudokuWidget.h"
-#include "../Logic/linkList.h"
+#include "SudokuWidget.h"
+#include "../Logic/LinkList.h"
 
 //The Calculation
-int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
+int sudokuMain::getSolution(int table[9][9][10], int solution[9][9]) {
     int tablecopy[9][3][3];
     int T_L, T_R;           //The Current Position
     int bStepBack = 0;      //If "1" Means The Last Step Has No Usable Value
@@ -19,10 +19,10 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (table[i][j][0] == 0) {
-                recode.Push(i, j);
-                setted[i][j] = 0;
+                recode.push(i, j);
+                m_setted[i][j] = 0;
             } else {
-                setted[i][j] = 1;
+                m_setted[i][j] = 1;
             }
         }
     }

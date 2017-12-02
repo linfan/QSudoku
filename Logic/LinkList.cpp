@@ -1,4 +1,4 @@
-#include "linkList.h"
+#include "LinkList.h"
 
 #define NULL 0
 
@@ -15,13 +15,13 @@ LinkList::LinkList() {
 
 LinkList::~LinkList() {
     while (head != tail) {
-        LinkList::Pop();
+        LinkList::pop();
     }
     delete head;
     delete end;
 }
 
-void LinkList::Push(int LL, int RR) {
+void LinkList::push(int LL, int RR) {
     cur = tail;
     tail = new ListNode;
     tail->L = LL;
@@ -33,7 +33,7 @@ void LinkList::Push(int LL, int RR) {
     counts++;
 }
 
-void LinkList::Pop() {
+void LinkList::pop() {
     cur = tail->prov;
     delete tail;
     cur->next = end;
