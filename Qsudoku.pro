@@ -16,9 +16,9 @@ HEADERS += Dialogs/ruleDlg.h \
     Dialogs/explanatryDlg.h \
     Dialogs/copyrightDlg.h \
     Dialogs/aboutdlg.h \
-    MainWidget/linkList.h \
     Dialogs/conformDlg.h \
-    MainWidget/sudokuWidget.h
+    MainWidget/sudokuWidget.h \
+    Logic/linkList.h
 FORMS += Dialogs/rule.ui \
     Dialogs/process.ui \
     Dialogs/explanatry.ui \
@@ -26,19 +26,19 @@ FORMS += Dialogs/rule.ui \
     Dialogs/aboutdlg.ui \
     Dialogs/conform.ui \
     MainWidget/sudokuWidget.ui
-SOURCES += Dialogs/ruleDlg.cpp \
+SOURCES += Main.cpp \
+    Dialogs/ruleDlg.cpp \
     Dialogs/processDlg.cpp \
     Dialogs/explanatryDlg.cpp \
     Dialogs/copyrightDlg.cpp \
     Dialogs/aboutdlg.cpp \
-    MainWidget/sudokuMain.cpp \
-    MainWidget/sudoku.cpp \
-    MainWidget/pushButton.cpp \
-    MainWidget/linkList.cpp \
-    MainWidget/buttonAction.cpp \
     Dialogs/conformDlg.cpp \
+    MainWidget/pushButton.cpp \
+    MainWidget/buttonAction.cpp \
     MainWidget/diverseFunction.cpp \
-    MainWidget/sudokuWidget.cpp
+    MainWidget/sudokuWidget.cpp \
+    MainWidget/sudoku.cpp \
+    Logic/linkList.cpp
 QT += network widgets
 RESOURCES += Resource/sudoku.qrc
 OTHER_FILES += MainWidget/nearlyFinish.table

@@ -117,7 +117,8 @@ sudokuMain::sudokuMain(QWidget *parent)
 
     // 3 * 3 Button objects matrix on the right side of game table
     QPushButton* sideBtns[9] = { pB1, pB2, pB3, pB4, pB5, pB6, pB7, pB8, pB9 };
-    QPushButton* btnMap[9][9] = BUTTON_MATRIX;
+    // 9 * 9 Button objects matrix of game table
+    SudokuMatrix btnMap = getButtonMatrix();
 
     for (int i = 0; i < 9; i++) {
         connect(sideBtns[i], &QPushButton::clicked, [ = ]() {
@@ -141,3 +142,18 @@ sudokuMain::~sudokuMain() {
     delete m_processDlg;
 }
 
+SudokuMatrix sudokuMain::getButtonMatrix() {
+    SudokuMatrix btnMatrix = {
+        {   {{ pB11, pB12, pB13, pB14, pB15, pB16, pB17, pB18, pB19 }},
+            {{ pB21, pB22, pB23, pB24, pB25, pB26, pB27, pB28, pB29 }},
+            {{ pB31, pB32, pB33, pB34, pB35, pB36, pB37, pB38, pB39 }},
+            {{ pB41, pB42, pB43, pB44, pB45, pB46, pB47, pB48, pB49 }},
+            {{ pB51, pB52, pB53, pB54, pB55, pB56, pB57, pB58, pB59 }},
+            {{ pB61, pB62, pB63, pB64, pB65, pB66, pB67, pB68, pB69 }},
+            {{ pB71, pB72, pB73, pB74, pB75, pB76, pB77, pB78, pB79 }},
+            {{ pB81, pB82, pB83, pB84, pB85, pB86, pB87, pB88, pB89 }},
+            {{ pB91, pB92, pB93, pB94, pB95, pB96, pB97, pB98, pB99 }}
+        }
+    };
+    return btnMatrix;
+}

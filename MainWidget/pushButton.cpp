@@ -20,11 +20,10 @@ void sudokuMain::setButtonNum(QPushButton *pB, int Num, int size) {
     }
 }
 
-int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
+bool sudokuMain::checkGameAlreadyBegin() {
     if (m_bFinished) {
         return false;
     }
-    //qDebug()<<"m_iSetNum: "<<m_iSetNum<<endl;
     if (m_bLocked) {
         QMessageBox lock(QMessageBox::Information, QString(tr("提示")),
                          QString(tr("请点击\"开始计时\"再做题!")), QMessageBox::Ok, this,
@@ -32,10 +31,17 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
         lock.exec();
         return false;
     }
+    return true;
+}
+
+int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
+    if (!checkGameAlreadyBegin()) {
+        return false;
+    }
     if (writable[L - 1][R - 1]) {
         click_Timer->stop();
         if (m_time_between_click != 0
-                && m_last_click_button == 10 * (L - 1) + (R - 1)) { //DOUBLE CLICK
+                && m_last_click_button == 10 * (L - 1) + (R - 1)) { // Double click
             table[L - 1][R - 1][0] = 0;
             clearButton(pB, L, R);
             if (m_beginPorgressBar && m_iSetNum != 0 && setted[L - 1][R - 1] == 1) {
@@ -45,7 +51,7 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
                 progressBar_1->setValue(m_process);
                 sendDatagram(m_process);
             }
-        } else { //SINGLE CLICK
+        } else { // Single click
             table[L - 1][R - 1][0] = m_iSetNum;
             setButtonNum(pB, m_iSetNum, 40);
             if (m_beginPorgressBar && m_iSetNum != 0 && setted[L - 1][R - 1] == 0) {
@@ -55,24 +61,20 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
                 progressBar_1->setValue(m_process);
                 sendDatagram(m_process);
             }
-            if (m_blankNumber == 0) { ////Is The Last One Blank,Finish The Table
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (table[i][j][0] != solution[i][j]) {
-                            QMessageBox fail(QMessageBox::Information, QString(tr("提示")),
-                                             QString(tr("不正确,再仔细想想-_-!")), QMessageBox::Ok, this,
-                                             Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-                            fail.exec();
-                            table[L - 1][R - 1][0] = 0;
-                            clearButton(pB, L, R);
-                            m_blankNumber++;
-                            setted[L - 1][R - 1] = 0;
-                            m_process = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
-                            progressBar_1->setValue(m_process);
-                            sendDatagram(m_process);
-                            return false;
-                        }
-                    }
+            if (m_blankNumber == 0) { // Matrix complete, check result
+                if (!matrixEqual(table, solution)) {
+                    QMessageBox fail(QMessageBox::Information, QString(tr("提示")),
+                                     QString(tr("不正确,再仔细想想-_-!")), QMessageBox::Ok, this,
+                                     Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+                    fail.exec();
+                    table[L - 1][R - 1][0] = 0;
+                    clearButton(pB, L, R);
+                    m_blankNumber = 1;
+                    setted[L - 1][R - 1] = 0;
+                    m_process = (int)(100 * (1 - 1.0 / m_totalBlank));
+                    progressBar_1->setValue(m_process);
+                    sendDatagram(m_process);
+                    return false;
                 }
                 main_Timer->stop();
                 m_blankNumber = -1;
@@ -107,6 +109,17 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
     return false;
 }
 
+bool sudokuMain::matrixEqual(int table[9][9][10], int solution[9][9]) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (table[i][j][0] != solution[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 void sudokuMain::clearButton(QPushButton *pB, int L, int R) {
     if (writable[L - 1][R - 1]) {
         table[L - 1][R - 1][0] = 0;
@@ -123,14 +136,7 @@ QPushButton* sudokuMain::getPointFromNumber(int num) {
 }
 
 void sudokuMain::sideButtonDown(QPushButton *pB, int num) {
-    if (m_bFinished) {
-        return;
-    }
-    if (m_bLocked) {
-        QMessageBox lock(QMessageBox::Information, QString(tr("提示")),
-                         QString(tr("请点击\"开始计时\"再做题!")), QMessageBox::Ok, this,
-                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-        lock.exec();
+    if (!checkGameAlreadyBegin()) {
         return;
     }
     if (m_iSetNum != num) {
@@ -143,8 +149,9 @@ void sudokuMain::sideButtonDown(QPushButton *pB, int num) {
     m_iSetNum = num;
 }
 
-QPushButton* sudokuMain::getPointFromPosition(int L, int R) { //L,R should among 1 to 9
-    QPushButton* btnMap[9][9] = BUTTON_MATRIX;
+QPushButton* sudokuMain::getPointFromPosition(int L, int R) {
+    SudokuMatrix btnMap = getButtonMatrix();
+    // L,R should among 1 to 9
     if (L >= 1 && L <= 9 && R >= 1 && R <= 9) {
         return btnMap[L - 1][R - 1];
     }

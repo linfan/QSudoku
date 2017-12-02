@@ -1,13 +1,11 @@
 #include <QDebug>
-#include "linkList.h"
 #include "sudokuWidget.h"
+#include "../Logic/linkList.h"
 
 //The Calculation
 int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
-    int T_L, T_R;   //The Current Position
     int tablecopy[9][3][3];
-    LinkList recode;//"recode" tell the positions in "table" which are writable
-
+    int T_L, T_R;           //The Current Position
     int bStepBack = 0;      //If "1" Means The Last Step Has No Usable Value
     int bGotValuable;       //If "0" Means Current Position Has No Usable Value
     int bSolvable = 1;      //If "0" Means This Sudoku_Table Has No Solution
@@ -15,11 +13,11 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
     int NumOfSolutions = 0; //The Number Of Possible Answer
     int tempN;              //A Temporary Position
     int tempT;              //A Temporary Value
-    int i, j, k;            //Index For L/R/V
+    LinkList recode;        //"recode" tell the positions in "table" which are writable
 
     //Put Usable Positions In To "recode"
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
             if (table[i][j][0] == 0) {
                 recode.Push(i, j);
                 setted[i][j] = 0;
@@ -40,37 +38,38 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
     //qDebug() << "m_totalBlank: " << m_totalBlank <<endl;
     //qDebug() << "m_blankNumber: " << m_blankNumber <<endl;
 
-    //Check Frist To Kill Morbid Table
-    for (i = 0; i < 9; i++) { //The Each Number In Nine Rows Should Be Unique
-        for (k = 0; k < 8; k++) {
-            for (j = k + 1; j < 9; j++) {
+    // i -> Row, j -> Column, k -> Depth
+    // Check Frist To Kill Morbid Table
+    for (int i = 0; i < 9; i++) { // The Each Number In Nine Rows Should Be Unique
+        for (int k = 0; k < 8; k++) {
+            for (int j = k + 1; j < 9; j++) {
                 if (table[i][k][0] == table[i][j][0] && table[i][k][0] != 0) {
                     return 0;
                 }
             }
         }
     }
-    for (j = 0; j < 9; j++) { //The Each Number In Nine Volunms Should Be Unique
-        for (k = 0; k < 8; k++) {
-            for (i = k + 1; i < 9; i++) {
+    for (int j = 0; j < 9; j++) { // The Each Number In Nine Volunms Should Be Unique
+        for (int k = 0; k < 8; k++) {
+            for (int i = k + 1; i < 9; i++) {
                 if (table[k][j][0] == table[i][j][0] && table[i][j][0] != 0) {
                     return 0;
                 }
             }
         }
     }
+
     int list[] = {00, 03, 06, 30, 33, 36, 60, 63, 66};
     int table_num[9];
-    int index = 0;
-    for (k = 0; k < 9; k++) {
-        for (i = list[k] / 10, index = 0; i < (list[k] / 10) + 3;
+    for (int k = 0; k < 9; k++) {
+        for (int i = list[k] / 10, index = 0; i < (list[k] / 10) + 3;
                 i++) { //The Nine "33" 's Square Each Number Should Be Unique
-            for (j = list[k] % 10; j < (list[k] % 10) + 3; j++, index++) {
+            for (int j = list[k] % 10; j < (list[k] % 10) + 3; j++, index++) {
                 table_num[index] = table[i][j][0];
             }
         }
-        for (i = 0; i < 8; i++) {
-            for (j = i + 1; j < 9; j++) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = i + 1; j < 9; j++) {
                 if (table_num[i] == table_num[j] && table_num[i] != 0) {
                     return 0;
                 }
@@ -86,13 +85,13 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
         T_R = recode.cur->R;
 
         if (bStepBack == 0) {
-            //table->tablecopy
-            i = -1;
-            for (j = 0; j < 9; j++) {
+            // table -> tablecopy
+            int i = -1;
+            for (int j = 0; j < 9; j++) {
                 if (j % 3 != 0) {
                     i -= 3;
                 }
-                for (k = 0; k < 9; k++) {
+                for (int k = 0; k < 9; k++) {
                     if (k % 3 == 0) {
                         i++;
                     }
@@ -100,18 +99,18 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
                 }
             }
 
-            for (k = 0; k < 10; k++) {
+            for (int k = 0; k < 10; k++) {
                 table[T_L][T_R][k] = 0;   //All To "0"
             }
 
-            for (j = 0; j < 9; j++) { //The Same Row With Position Of [T_L][T_R]
+            for (int j = 0; j < 9; j++) { //The Same Row With Position Of [T_L][T_R]
                 tempT = table[T_L][j][0];
                 if (j != T_R) {
                     table[T_L][T_R][tempT] = tempT;
                 }
             }
 
-            for (i = 0; i < 9; i++) { //The Same Column With Position Of [T_L][T_R]
+            for (int i = 0; i < 9; i++) { //The Same Column With Position Of [T_L][T_R]
                 tempT = table[i][T_R][0];
                 if (i != T_L) {
                     table[T_L][T_R][tempT] = tempT;
@@ -119,15 +118,15 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
             }
 
             //The Same "33" 's Square With Position Of [T_L][T_R]
-            for (i = 0; i < 3; i++) {
-                for (j = 0; j < 3; j++) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
                     tempN = (int(T_L / 3)) * 3 + T_R / 3;
                     tempT = tablecopy[tempN][i][j];
                     table[T_L][T_R][tempT] = tempT;
                 }
             }
 
-            for (k = 1; k < 10; k++) { //Get Inverse
+            for (int k = 1; k < 10; k++) { //Get Inverse
                 if (table[T_L][T_R][k] == 0) {
                     table[T_L][T_R][k] = k;
                     bGotValuable = 1;
@@ -138,7 +137,7 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
         } else {
             table[T_L][T_R][0] = 0;
             bStepBack = 0;
-            for (k = 1; k < 10; k++) { //DeTect The Usable Values
+            for (int k = 1; k < 10; k++) { //DeTect The Usable Values
                 if (table[T_L][T_R][k] != 0) {
                     bGotValuable = 1;
                     break;
@@ -162,7 +161,7 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
                 break;//If No Possible Solution ,Do Break
             }
         } else { //If Got Usable Value, Move On
-            for (k = 1; k < 10; k++) {
+            for (int k = 1; k < 10; k++) {
                 if (table[T_L][T_R][k] != 0) {
                     table[T_L][T_R][k] = 0;
                     table[T_L][T_R][0] = k;
@@ -175,8 +174,8 @@ int sudokuMain::GetSolution(int table[9][9][10], int solution[9][9]) {
         if (recode.cur == recode.end) {
             NumOfSolutions++;
             if (NumOfSolutions == 1) { //Recode The Frist Solution
-                for (i = 0; i < 9; i++) {
-                    for (j = 0; j < 9; j++) {
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
                         solution[i][j] = table[i][j][0];
                     }
                 }
