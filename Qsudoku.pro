@@ -19,6 +19,7 @@ HEADERS += \
     Dialogs/ProcessDlg.h \
     Dialogs/RuleDlg.h \
     Logic/LinkList.h \
+    Logic/SudokuCalculator.h \
     MainWidget/SudokuWidget.h
 FORMS += Dialogs/rule.ui \
     Dialogs/process.ui \
@@ -31,14 +32,14 @@ SOURCES += Main.cpp \
     Dialogs/Aboutdlg.cpp \
     Dialogs/ConformDlg.cpp \
     Dialogs/CopyrightDlg.cpp \
-    Logic/LinkList.cpp \
     Dialogs/ExplanatryDlg.cpp \
     Dialogs/ProcessDlg.cpp \
     Dialogs/RuleDlg.cpp \
+    Logic/LinkList.cpp \
+    Logic/SudokuCalculator.cpp \
     MainWidget/ButtonAction.cpp \
     MainWidget/DiverseFunction.cpp \
     MainWidget/PushButton.cpp \
-    MainWidget/Sudoku.cpp \
     MainWidget/SudokuWidget.cpp
 QT += network widgets
 RESOURCES += Resource/sudoku.qrc

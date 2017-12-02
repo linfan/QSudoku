@@ -17,6 +17,7 @@ sudokuMain::sudokuMain(QWidget *parent)
     m_time_between_click = 0;
     m_main_Timer = new QTimer(this);
     m_click_Timer = new QTimer(this);
+    calc = new SudokuCalculator();
     rB_normal->setChecked(true);
     rB_single->setChecked(true);
     lineEdit_IP->setVisible(false);

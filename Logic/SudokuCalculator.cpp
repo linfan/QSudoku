@@ -1,42 +1,34 @@
-#include <QDebug>
-#include "SudokuWidget.h"
-#include "../Logic/LinkList.h"
+#include "LinkList.h"
+#include "SudokuCalculator.h"
 
-//The Calculation
-int sudokuMain::getSolution(int table[9][9][10], int solution[9][9]) {
+// The Calculation
+int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
     int tablecopy[9][3][3];
-    int T_L, T_R;           //The Current Position
-    int bStepBack = 0;      //If "1" Means The Last Step Has No Usable Value
-    int bGotValuable;       //If "0" Means Current Position Has No Usable Value
-    int bSolvable = 1;      //If "0" Means This Sudoku_Table Has No Solution
-    int bUnique = 1;        //If "0" Means These is More Than One Possible Answers
-    int NumOfSolutions = 0; //The Number Of Possible Answer
-    int tempN;              //A Temporary Position
-    int tempT;              //A Temporary Value
-    LinkList recode;        //"recode" tell the positions in "table" which are writable
+    int T_L, T_R;           // The Current Position
+    int bStepBack = 0;      // If "1" Means The Last Step Has No Usable Value
+    int bGotValuable;       // If "0" Means Current Position Has No Usable Value
+    int bSolvable = 1;      // If "0" Means This Sudoku_Table Has No Solution
+    int bUnique = 1;        // If "0" Means These is More Than One Possible Answers
+    int NumOfSolutions = 0; // The Number Of Possible Answer
+    int tempN;              // A Temporary Position
+    int tempT;              // A Temporary Value
+    LinkList recode;        // "recode" tell the positions in "table" which are writable
 
-    //Put Usable Positions In To "recode"
+    // Put Usable Positions In To "recode"
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (table[i][j][0] == 0) {
                 recode.push(i, j);
-                m_setted[i][j] = 0;
-            } else {
-                m_setted[i][j] = 1;
             }
         }
     }
 
+    // Head Node is ALLTHEWAYS NULL
     recode.cur = recode.head->next;
-    //head Node is ALLTHEWAYS NULL
 
-    if (recode.counts == 0) { //The Table Is Full
+    if (recode.counts == 0) { // The Table Is Full
         return 0;
     }
-    m_totalBlank = recode.counts;
-    m_blankNumber = m_totalBlank;
-    //qDebug() << "m_totalBlank: " << m_totalBlank <<endl;
-    //qDebug() << "m_blankNumber: " << m_blankNumber <<endl;
 
     // i -> Row, j -> Column, k -> Depth
     // Check Frist To Kill Morbid Table

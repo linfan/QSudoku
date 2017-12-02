@@ -39,6 +39,22 @@ void sudokuMain::resetTable() {
     lineEdit_IP->setDisabled(false);
 }
 
+void sudokuMain::initStatusTable() {
+    int emptyGridCounter = 0;
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (m_table[i][j][0] == 0) {
+                emptyGridCounter++;
+                m_setted[i][j] = 0;
+            } else {
+                m_setted[i][j] = 1;
+            }
+        }
+    }
+    m_totalBlank = emptyGridCounter;
+    m_blankNumber = emptyGridCounter;
+}
+
 void sudokuMain::autoSet() {
     if (rB_online->isChecked()) {
         QMessageBox box(QMessageBox::Information, QString(tr("联机对战")),
@@ -139,8 +155,9 @@ void sudokuMain::autoSet() {
         select_from_4[3 - index] = 0;
     }
     //qDebug()<<table[0][0][0]<<' '<<table[0][1][0]<<' '<<table[0][2][0]<<' '<<table[1][0][0]<<' '<<table[1][1][0]<<' '<<table[1][2][0]<<' '<<table[2][0][0]<<' '<<table[2][1][0]<<' '<<table[2][2][0]<<' ';
-    getSolution(m_table, m_solution);
-    //Store The Table
+    initStatusTable();
+    calc->getSolution(m_table, m_solution);
+    // Store The Table
     for (L = 0; L < 9; L++) {
         for (R = 0; R < 9; R++) {
             m_tableBackup[L][R] = m_table[L][R][0];
@@ -154,7 +171,8 @@ void sudokuMain::autoSet() {
         if (m_table[L][R][0] != 0) {
             index = m_table[L][R][0];
             m_table[L][R][0] = 0;
-            if (getSolution(m_table, m_solution)) {
+            initStatusTable();
+            if (calc->getSolution(m_table, m_solution)) {
                 num++;
                 m_tableBackup[L][R] = 0;
                 //qDebug()<<num<<"table["<<L<<"]["<<R<<"]Setted";
@@ -170,8 +188,8 @@ void sudokuMain::autoSet() {
             }
         }
     }
-    //Now "solution" Is A Full Table
-    //Output It For Debug
+    // Now "solution" Is A Full Table
+    // Output It For Debug
     /*for(L=0;L<9;L++)//Output It For Debug
     {
         for(R=0;R<9;R++)
@@ -299,7 +317,7 @@ void sudokuMain::startGame() {
         //qDebug() << "m_blankNumber: " << m_blankNumber <<endl;
         //qDebug() << "m_totalBlank: " << m_totalBlank <<endl;
         //qDebug() << "1-m_blankNumber/m_totalBlank: " << 1-(float)m_blankNumber/(float)m_totalBlank <<endl;
-        getSolution(m_table, m_solution);
+        calc->getSolution(m_table, m_solution);
         int val = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
         progressBar_1->setValue(val);
         for (L = 0; L < 9; L++) {
@@ -328,7 +346,7 @@ void sudokuMain::setTable() {
     }
     int L, R;
     //Judge The Table Array
-    int bOK = getSolution(m_table, m_solution);
+    int bOK = calc->getSolution(m_table, m_solution);
     if (!bOK) {
         QMessageBox box(QMessageBox::Information, QString(tr("提示")),
                         QString(tr("当前九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
@@ -409,8 +427,9 @@ void sudokuMain::fileSet() {
         file.getChar(&Cr);
     }
     file.close();
-    //Judge The Table Array
-    int bOK = getSolution(m_table, m_solution);
+    // Judge The Table Array
+    initStatusTable();
+    int bOK = calc->getSolution(m_table, m_solution);
     if (!bOK) {
         QMessageBox box(QMessageBox::Information, QString(tr("提示")),
                         QString(tr("此九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
