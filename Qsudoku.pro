@@ -17,7 +17,8 @@ HEADERS += \
     Dialogs/RuleDlg.h \
     Logic/SudokuCalculator.h \
     MainWidget/SudokuWidget.h \
-    Logic/PosStack.h
+    Logic/PosStack.h \
+    Logic/ConstPool.h
 FORMS += Dialogs/rule.ui \
     Dialogs/process.ui \
     Dialogs/explanatry.ui \

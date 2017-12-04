@@ -9,7 +9,7 @@ OBJECTS_DIR += MediumFiles
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # Input
-HEADERS += \
+HEADERS += PosStackTest.h \
            ../Logic/PosStack.h
 SOURCES += TestMain.cpp \
            ../Logic/PosStack.cpp

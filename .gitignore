@@ -1,6 +1,10 @@
 # QtCreator Project file
 *.pro.user
 
+# Generated file
+Makefile
+MediumFiles/
+
 # Temporary files
 *~
 *.orig

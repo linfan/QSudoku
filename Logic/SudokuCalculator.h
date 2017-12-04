@@ -3,7 +3,7 @@
 
 class SudokuCalculator {
 public:
-    int getSolution(int table[9][9][10], int solution[9][9]);
+    bool getSolution(int table[9][9][10], int solution[9][9]);
 };
 
 #endif // SUDOKU_H

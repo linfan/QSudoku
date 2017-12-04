@@ -6,7 +6,7 @@
 #include <QTimer>
 #include <array>
 #include "ui_sudokuWidget.h"
-#include "../Logic/SudokuCalculator.h"
+#include "Logic/SudokuCalculator.h"
 
 #define MES_REQUEST 200
 #define MES_CONFIRM 300

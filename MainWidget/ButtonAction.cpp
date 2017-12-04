@@ -11,6 +11,7 @@
 #include "ProcessDlg.h"
 #include "SudokuWidget.h"
 #include "ExplanatryDlg.h"
+#include "Logic/ConstPool.h"
 
 void sudokuMain::resetTable() {
     int i, j;
@@ -78,11 +79,11 @@ void sudokuMain::autoSet() {
         }
     }
     if (rB_easy->isChecked()) {
-        blankGridNum = 15;
+        blankGridNum = EASY_MODE_BLANK_GRIDS;
     } else if (rB_normal->isChecked()) {
-        blankGridNum = 30;
+        blankGridNum = NORM_MODE_BLANK_GRIDS;
     } else if (rB_hard->isChecked()) {
-        blankGridNum = 45;
+        blankGridNum = HARD_MODE_BLANK_GRIDS;
     }
     qsrand((QTime::currentTime()).second() * (QTime::currentTime()).minute());
     //Fill The Frist Row
@@ -346,8 +347,7 @@ void sudokuMain::setTable() {
     }
     int L, R;
     //Judge The Table Array
-    int bOK = calc->getSolution(m_table, m_solution);
-    if (!bOK) {
+    if (!calc->getSolution(m_table, m_solution)) {
         QMessageBox box(QMessageBox::Information, QString(tr("提示")),
                         QString(tr("当前九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
@@ -429,8 +429,7 @@ void sudokuMain::fileSet() {
     file.close();
     // Judge The Table Array
     initStatusTable();
-    int bOK = calc->getSolution(m_table, m_solution);
-    if (!bOK) {
+    if (!calc->getSolution(m_table, m_solution)) {
         QMessageBox box(QMessageBox::Information, QString(tr("提示")),
                         QString(tr("此九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
