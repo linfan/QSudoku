@@ -4,12 +4,12 @@
 #include <QtWidgets/QDialog>
 #include "ui_rule.h"
 
-class ruleDlg : public QDialog, public Ui_rule {
+class RuleDlg : public QDialog, public Ui_rule {
     Q_OBJECT
 
 public:
-    ruleDlg(QWidget *parent = 0);
-    ~ruleDlg();
+    RuleDlg(QWidget *parent = 0);
+    ~RuleDlg();
 private:
     int m_page;
     void switchPage();

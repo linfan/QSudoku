@@ -40,11 +40,11 @@ void sudokuMain::resetTable() {
     lineEdit_IP->setDisabled(false);
 }
 
-void sudokuMain::initStatusTable() {
+void sudokuMain::initStatusTable(int table[9][9][10]) {
     int emptyGridCounter = 0;
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
-            if (m_table[i][j][0] == 0) {
+            if (table[i][j][0] == 0) {
                 emptyGridCounter++;
                 m_setted[i][j] = 0;
             } else {
@@ -156,7 +156,7 @@ void sudokuMain::autoSet() {
         select_from_4[3 - index] = 0;
     }
     //qDebug()<<table[0][0][0]<<' '<<table[0][1][0]<<' '<<table[0][2][0]<<' '<<table[1][0][0]<<' '<<table[1][1][0]<<' '<<table[1][2][0]<<' '<<table[2][0][0]<<' '<<table[2][1][0]<<' '<<table[2][2][0]<<' ';
-    initStatusTable();
+    initStatusTable(m_table);
     calc->getSolution(m_table, m_solution);
     // Store The Table
     for (L = 0; L < 9; L++) {
@@ -172,7 +172,7 @@ void sudokuMain::autoSet() {
         if (m_table[L][R][0] != 0) {
             index = m_table[L][R][0];
             m_table[L][R][0] = 0;
-            initStatusTable();
+            initStatusTable(m_table);
             if (calc->getSolution(m_table, m_solution)) {
                 num++;
                 m_tableBackup[L][R] = 0;
@@ -334,7 +334,7 @@ void sudokuMain::startGame() {
     }
 }
 
-void sudokuMain::setTable() {
+void sudokuMain::setTable(bool isLoadFromFile) {
     if (rB_online->isChecked()) {
         QMessageBox box(QMessageBox::Information, QString(tr("联机对战")),
                         QString(tr("确认开始连接对方主机?")),
@@ -345,33 +345,48 @@ void sudokuMain::setTable() {
             return;
         }
     }
-    int L, R;
-    //Judge The Table Array
+
+    if (isLoadFromFile) {
+        try {
+            readTableFile(m_table);
+        } catch (char c) {
+            QMessageBox error(QMessageBox::Critical, QString(tr("错误")),
+                              QString(tr("文件读取出错，请确认文件内容!")), QMessageBox::Ok,
+                              this, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+            error.exec();
+            return;
+        }
+    }
+
+    // Judge The Table Array
     if (!calc->getSolution(m_table, m_solution)) {
         QMessageBox box(QMessageBox::Information, QString(tr("提示")),
-                        QString(tr("当前九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
+                        QString(tr("此九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
                         Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
         box.exec();
         return;
-    } else {
-        //Set Table
-        QPushButton* pB;
-        for (L = 0; L < 9; L++) {
-            for (R = 0; R < 9; R++) {
-                if (m_table[L][R][0] != 0) {
-                    pB = getPointFromPosition(L + 1, R + 1);
-                    setButtonNum(pB, m_table[L][R][0], 40);
-                    pB->setFlat(true);
-                    m_writable[L][R] = 0;
-                    //pB->setDisabled(true);
-                }
+    }
+
+    initStatusTable(m_table);
+
+    //Set Table
+    QPushButton* pB;
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
+            if (m_table[x][y][0] != 0) {
+                pB = getPointFromPosition(x + 1, y + 1);
+                setButtonNum(pB, m_table[x][y][0], 40);
+                pB->setFlat(true);
+                m_writable[x][y] = 0;
+                //pB->setDisabled(true);
             }
         }
     }
-    for (L = 0; L < 9; L++) {
-        for (R = 0; R < 9; R++) {
-            m_writableLock[L][R] = m_writable[L][R];
-            m_writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
+
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
+            m_writableLock[x][y] = m_writable[x][y];
+            m_writable[x][y] = 0; // Alter After Being Setted, Protect "table"
         }
     }
     m_bLocked = true;
@@ -394,85 +409,24 @@ void sudokuMain::setTable() {
     }
 }
 
-void sudokuMain::fileSet() {
-    if (rB_online->isChecked()) {
-        QMessageBox box(QMessageBox::Information, QString(tr("联机对战")),
-                        QString(tr("确认开始连接对方主机?")),
-                        QMessageBox::Ok | QMessageBox::Cancel, this,
-                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-        box.exec();
-        if (box.clickedButton() == box.button(QMessageBox::Cancel)) {
-            return;
-        }
-    }
-    int L, R;
+void sudokuMain::readTableFile(int table[9][9][10]) {
     QString path = QFileDialog::getOpenFileName(this, tr("Open Table Text"),
                    "./Table", tr("Text Files(*.table)"));
     QFile file(path);
     char Cr;
     file.open(QIODevice::ReadOnly);
-    for (L = 0; L < 9; L++) {
-        for (R = 0; R < 9; R++) {
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
             file.getChar(&Cr);
             if (Cr < '0' || Cr > '9') {
-                QMessageBox error(QMessageBox::Critical, QString(tr("错误")),
-                                  QString(tr("文件读取出错，请确认文件内容!")), QMessageBox::Ok,
-                                  this, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-                error.exec();
-                return;
+                throw Cr;
             }
-            m_table[L][R][0] = Cr - '0';
+            table[x][y][0] = Cr - '0';
         }
         file.getChar(&Cr);
         file.getChar(&Cr);
     }
     file.close();
-    // Judge The Table Array
-    initStatusTable();
-    if (!calc->getSolution(m_table, m_solution)) {
-        QMessageBox box(QMessageBox::Information, QString(tr("提示")),
-                        QString(tr("此九宫格无解或不是唯一解!")), QMessageBox::Ok, this,
-                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-        box.exec();
-    } else {
-        //Set Table
-        QPushButton* pB;
-        for (L = 0; L < 9; L++) {
-            for (R = 0; R < 9; R++) {
-                if (m_table[L][R][0] != 0) {
-                    pB = getPointFromPosition(L + 1, R + 1);
-                    setButtonNum(pB, m_table[L][R][0], 40);
-                    pB->setFlat(true);
-                    m_writable[L][R] = 0;
-                    //pB->setDisabled(true);
-                }
-            }
-        }
-    }
-    for (L = 0; L < 9; L++) {
-        for (R = 0; R < 9; R++) {
-            m_writableLock[L][R] = m_writable[L][R];
-            m_writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
-        }
-    }
-    m_bLocked = true;
-    pB_setTable->setHidden(true);
-    pB_fileSet->setHidden(true);
-    pB_autoSet->setHidden(true);
-    pB_start->setHidden(false);
-    pB_resetTable->setHidden(false);
-    pB_giveUp->setHidden(false);
-    pB_resetTable->setDisabled(false);
-    pB_start->setDisabled(false);
-    pB_giveUp->setDisabled(true);
-    groupBox_2->setDisabled(true);
-    if (rB_single->isChecked()) {
-        groupBox_1->setDisabled(true);
-        lineEdit_IP->setDisabled(true);
-    }
-    if (rB_online->isChecked()) {
-        startGame();
-    }
 }
 
 void sudokuMain::win() {
@@ -496,6 +450,6 @@ void sudokuMain::win() {
 }
 
 void sudokuMain::expanatry() {
-    aboutDlg ab(this);
+    AboutDlg ab(this);
     ab.exec();
 }

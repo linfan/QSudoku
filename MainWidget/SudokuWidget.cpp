@@ -25,7 +25,7 @@ sudokuMain::sudokuMain(QWidget *parent)
     progressBar_2->setVisible(false);
     label_ip->setVisible(false);
     label_p2->setVisible(false);
-    m_processDlg = new processDlg(this);
+    m_processDlg = new ProcessDlg(this);
     m_connect_Timer = new QTimer(this);
     label_p1->setText(QString(tr("^_^ :")));
     label_p2->setText(QString(tr("")));
@@ -95,26 +95,30 @@ sudokuMain::sudokuMain(QWidget *parent)
     setButtonNum(pB8, 8, 30);
     setButtonNum(pB9, 9, 30);
 
-    connect(m_click_Timer, SIGNAL(timeout()), this, SLOT(clickTimerUp()));
-    connect(m_main_Timer, SIGNAL(timeout()), this, SLOT(mainTimerUp()));
-    connect(m_connect_Timer, SIGNAL(timeout()), this, SLOT(connectTimerUp()));
-    connect(&m_udpReceiver, SIGNAL(readyRead()), this,
-            SLOT(processPendingDatagrams()));
-
-    connect(pB_start, SIGNAL(clicked()), this, SLOT(startGame()));
-    connect(pB_setTable, SIGNAL(clicked()), this, SLOT(setTable()));
-    connect(pB_fileSet, SIGNAL(clicked()), this, SLOT(fileSet()));
-    connect(pB_autoSet, SIGNAL(clicked()), this, SLOT(autoSet()));
-    connect(pB_resetTable, SIGNAL(clicked()), this, SLOT(resetTable()));
-    connect(pB_giveUp, SIGNAL(clicked()), this, SLOT(giveUp()));
+    connect(m_click_Timer, &QTimer::timeout, this, &sudokuMain::clickTimerUp);
+    connect(m_main_Timer, &QTimer::timeout, this, &sudokuMain::mainTimerUp);
+    connect(m_connect_Timer, &QTimer::timeout, this, &sudokuMain::connectTimerUp);
+    connect(&m_udpReceiver, &QUdpSocket::readyRead, this, &sudokuMain::processPendingDatagrams);
+    connect(pB_start, &QPushButton::clicked, this, &sudokuMain::startGame);
+    connect(pB_setTable, &QPushButton::clicked, [ = ]() {
+        setTable(false);
+    });
+    connect(pB_fileSet, &QPushButton::clicked, [ = ]() {
+        setTable(true);
+    });
+    connect(pB_autoSet, &QPushButton::clicked, this, &sudokuMain::autoSet);
+    connect(pB_resetTable, &QPushButton::clicked, this, &sudokuMain::resetTable);
+    connect(pB_giveUp, &QPushButton::clicked, this, &sudokuMain::giveUp);
+    connect(rB_single, &QPushButton::clicked, this, &sudokuMain::enableIP);
+    connect(rB_online, &QPushButton::clicked, this, &sudokuMain::enableIP);
+    connect(pB_help, &QPushButton::clicked, this, &sudokuMain::expanatry);
+    connect(pB_win, &QPushButton::clicked, this, &sudokuMain::win);
+//    connect(cB_theme, &QComboBox::currentIndexChanged, this, &sudokuMain::changeTheme);
+//    connect(cB_background, &QComboBox::currentIndexChanged, this, &sudokuMain::changeBackground);
     connect(cB_theme, SIGNAL(currentIndexChanged(const QString &)), this,
             SLOT(changeTheme(const QString &)));
     connect(cB_background, SIGNAL(currentIndexChanged(const QString &)), this,
             SLOT(changeBackground(const QString &)));
-    connect(rB_single, SIGNAL(clicked()), this, SLOT(enableIP()));
-    connect(rB_online, SIGNAL(clicked()), this, SLOT(enableIP()));
-    connect(pB_help, SIGNAL(clicked()), this, SLOT(expanatry()));
-    connect(pB_win, SIGNAL(clicked()), this, SLOT(win()));
 
     // 3 * 3 Button objects matrix on the right side of game table
     QPushButton* sideBtns[9] = { pB1, pB2, pB3, pB4, pB5, pB6, pB7, pB8, pB9 };

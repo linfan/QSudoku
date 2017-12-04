@@ -1,7 +1,7 @@
 #include "RuleDlg.h"
 #include <QPixmap>
 
-ruleDlg::ruleDlg(QWidget *parent)
+RuleDlg::RuleDlg(QWidget *parent)
     : QDialog(parent) {
     setupUi(this);
     m_page = 1;
@@ -10,14 +10,14 @@ ruleDlg::ruleDlg(QWidget *parent)
     textR->setAlignment(Qt::AlignHCenter);
     pBL->setVisible(false);
     this->setWindowTitle(QString(tr("数独规则")));
-    connect(pBL, SIGNAL(clicked()), this, SLOT(previous()));
-    connect(pBR, SIGNAL(clicked()), this, SLOT(next()));
+    connect(pBL, &QPushButton::clicked, this, &RuleDlg::previous);
+    connect(pBR, &QPushButton::clicked, this, &RuleDlg::next);
 }
 
-ruleDlg::~ruleDlg() {
+RuleDlg::~RuleDlg() {
 }
 
-void ruleDlg::switchPage() {
+void RuleDlg::switchPage() {
     switch (m_page) {
     case 1:
         title->setTitle(QString(tr("[第一页: 什么是数独]")));
@@ -68,7 +68,7 @@ void ruleDlg::switchPage() {
     }
 }
 
-void ruleDlg::next() {
+void RuleDlg::next() {
     if (m_page == 7) {
         pBR->setVisible(false);
     } else {
@@ -79,7 +79,7 @@ void ruleDlg::next() {
     switchPage();
 }
 
-void ruleDlg::previous() {
+void RuleDlg::previous() {
     if (m_page == 1) {
         pBL->setVisible(false);
     } else {

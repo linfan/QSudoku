@@ -3,7 +3,7 @@
 
 using namespace std;
 
-copyrightDlg::copyrightDlg(QWidget *parent)
+CopyrightDlg::CopyrightDlg(QWidget *parent)
     : QDialog(parent) {
     setupUi(this);
     this->setWindowTitle(QString(tr("关于软件")));
@@ -18,5 +18,5 @@ copyrightDlg::copyrightDlg(QWidget *parent)
     text->setText(QString(tr(ss.str().c_str())));
 }
 
-copyrightDlg::~copyrightDlg() {
+CopyrightDlg::~CopyrightDlg() {
 }

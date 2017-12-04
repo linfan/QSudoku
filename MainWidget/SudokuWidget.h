@@ -17,7 +17,7 @@
 
 using SudokuMatrix = std::array<std::array<QPushButton*, 9>, 9>;
 
-class processDlg;
+class ProcessDlg;
 
 class sudokuMain : public QWidget, public Ui_MainForm {
     Q_OBJECT
@@ -53,7 +53,7 @@ private:
     int m_beginPorgressBar;    // Whether The ProgressBar Work, Set After "main_Timer.start()" Called
     QUdpSocket m_udpReceiver;  // The UDP Object For Receive Messages
     QUdpSocket m_udpSender;    // The UDP Object For Send Messages
-    processDlg *m_processDlg;  // When Connectint, Show It
+    ProcessDlg *m_processDlg;  // When Connectint, Show It
     QTimer *m_connect_Timer;   // To Calculate Time When Connecting
     bool m_bFinished;          // If Player Full The Table Successfully, It Will Be Set
     SudokuCalculator *calc;    // The Real Calculator
@@ -66,18 +66,18 @@ private:
     void setButtonNum(QPushButton *pB, int Num, int size);
     void sendDatagram(int message);
     void showTable();
-    bool matrixEqual(int m_table[9][9][10], int m_solution[9][9]);
+    bool matrixEqual(int table[9][9][10], int solution[9][9]);
     bool checkGameAlreadyBegin();
     SudokuMatrix getButtonMatrix();
-    void initStatusTable();
+    void initStatusTable(int table[9][9][10]);
+    void setTable(bool isLoadFromFile);
+    void readTableFile(int table[9][9][10]);
 
 private slots:
     void mainTimerUp();
     void connectTimerUp();
     void clickTimerUp();
     void startGame();
-    void setTable();
-    void fileSet();
     void resetTable();
     void autoSet();
     void giveUp();

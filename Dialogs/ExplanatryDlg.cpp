@@ -1,21 +1,21 @@
 #include "ExplanatryDlg.h"
 #include <QString>
 
-explanatryDlg::explanatryDlg(QWidget *parent)
+ExplanatryDlg::ExplanatryDlg(QWidget *parent)
     : QDialog(parent) {
     setupUi(this);
     m_page = 1;
     switchPage();
     this->setWindowTitle(QString(tr("操作说明")));
     pBL->setVisible(false);
-    connect(pBL, SIGNAL(clicked()), this, SLOT(previous()));
-    connect(pBR, SIGNAL(clicked()), this, SLOT(next()));
+    connect(pBL, &QPushButton::clicked, this, &ExplanatryDlg::previous);
+    connect(pBR, &QPushButton::clicked, this, &ExplanatryDlg::next);
 }
 
-explanatryDlg::~explanatryDlg() {
+ExplanatryDlg::~ExplanatryDlg() {
 }
 
-void explanatryDlg::switchPage() {
+void ExplanatryDlg::switchPage() {
     switch (m_page) {
     case 1:
         title->setTitle(QString(tr("[第一页: 界面介绍]")));
@@ -70,7 +70,7 @@ void explanatryDlg::switchPage() {
     }
 }
 
-void explanatryDlg::next() {
+void ExplanatryDlg::next() {
     if (m_page == 10) {
         pBR->setVisible(false);
     } else {
@@ -81,7 +81,7 @@ void explanatryDlg::next() {
     switchPage();
 }
 
-void explanatryDlg::previous() {
+void ExplanatryDlg::previous() {
     if (m_page == 1) {
         pBL->setVisible(false);
     } else {

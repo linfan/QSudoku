@@ -6,14 +6,14 @@
 #include "ui_conform.h"
 
 namespace Ui {
-class conformDlg;
+class ConformDlg;
 }
 
-class conformDlg : public QDialog, public Ui_conformDlg {
+class ConformDlg : public QDialog, public Ui_conformDlg {
     Q_OBJECT
 public:
-    conformDlg(QWidget *parent = 0);
-    ~conformDlg();
+    ConformDlg(QWidget *parent = 0);
+    ~ConformDlg();
     bool m_bconformed;  //Is Connect Successful
     bool makeMode();
 private slots:

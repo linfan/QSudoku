@@ -51,7 +51,7 @@ void sudokuMain::connectTimerUp() {
     }
 }
 
-void sudokuMain::changeTheme(const QString & text) {
+void sudokuMain::changeTheme(const QString &text) {
     if (text != m_curTheme) {
         //Change Setting
         if (text == QString(tr("数字"))) {
@@ -94,7 +94,7 @@ void sudokuMain::changeTheme(const QString & text) {
     }
 }
 
-void sudokuMain::changeBackground(const QString & text) {
+void sudokuMain::changeBackground(const QString &text) {
     if (text != m_curBackground) {
         //Change Setting
         if (text == QString(tr("木质格调"))) {
@@ -191,7 +191,7 @@ void sudokuMain::processPendingDatagrams() {
     if (val >= 0 && val <= 100 && rB_online->isChecked()) {
         progressBar_2->setValue(val);
     } else if (val == MES_REQUEST && rB_online->isChecked()) {
-        conformDlg con;
+        ConformDlg con;
         bool ok = con.makeMode();
         QString ip;
         ip = lineEdit_IP->text();

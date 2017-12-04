@@ -5,14 +5,14 @@
 #include "ui_aboutdlg.h"
 
 namespace Ui {
-class aboutDlg;
+class AboutDlg;
 }
 
-class aboutDlg : public QDialog, public Ui_aboutDlg {
+class AboutDlg : public QDialog, public Ui_aboutDlg {
     Q_OBJECT
 public:
-    aboutDlg(QWidget *parent = 0);
-    ~aboutDlg();
+    AboutDlg(QWidget *parent = 0);
+    ~AboutDlg();
 
 private slots:
     void showExeplanatry();

@@ -6,14 +6,14 @@
 #include "ui_process.h"
 
 namespace Ui {
-class processDlg;
+class ProcessDlg;
 }
 
-class processDlg : public QDialog, public Ui_processDlg {
+class ProcessDlg : public QDialog, public Ui_processDlg {
     Q_OBJECT
 public:
-    processDlg(QWidget *parent = 0);
-    ~processDlg();
+    ProcessDlg(QWidget *parent = 0);
+    ~ProcessDlg();
     bool m_bConnected;  //Is Connect Successful
     bool m_bCanceled;  //Is Connect Canceled
     QTimer m_Timer;

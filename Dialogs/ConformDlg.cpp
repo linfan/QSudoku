@@ -1,28 +1,28 @@
 #include "ConformDlg.h"
 #include "ui_conform.h"
 
-conformDlg::conformDlg(QWidget *parent) :
+ConformDlg::ConformDlg(QWidget *parent) :
     QDialog(parent) {
     setupUi(this);
     m_bconformed = false;
-    connect(pB_reject, SIGNAL(clicked()), this, SLOT(funReject()));
-    connect(pB_conform, SIGNAL(clicked()), this, SLOT(funConform()));
+    connect(pB_reject, &QPushButton::clicked, this, &ConformDlg::funReject);
+    connect(pB_conform, &QPushButton::clicked, this, &ConformDlg::funConform);
 }
 
-conformDlg::~conformDlg() {
+ConformDlg::~ConformDlg() {
 }
 
-bool conformDlg::makeMode() {
+bool ConformDlg::makeMode() {
     exec();
     return m_bconformed;
 }
 
-void conformDlg::funReject() {
+void ConformDlg::funReject() {
     m_bconformed = false;
     close();
 }
 
-void conformDlg::funConform() {
+void ConformDlg::funConform() {
     m_bconformed = true;
     //close();
 }

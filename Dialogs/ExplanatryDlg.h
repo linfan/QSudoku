@@ -4,12 +4,12 @@
 #include <QtWidgets/QDialog>
 #include "ui_explanatry.h"
 
-class explanatryDlg : public QDialog, public Ui_explanatry {
+class ExplanatryDlg : public QDialog, public Ui_explanatry {
     Q_OBJECT
 
 public:
-    explanatryDlg(QWidget *parent = 0);
-    ~explanatryDlg();
+    ExplanatryDlg(QWidget *parent = 0);
+    ~ExplanatryDlg();
 private:
     int m_page;
     void switchPage();

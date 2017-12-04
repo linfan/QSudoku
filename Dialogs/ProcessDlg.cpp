@@ -3,19 +3,19 @@
 #include <QMessageBox>
 #include <QString>
 
-processDlg::processDlg(QWidget *parent) :
+ProcessDlg::ProcessDlg(QWidget *parent) :
     QDialog(parent) {
     setupUi(this);
     m_bConnected = false;
     m_bCanceled = false;
-    connect(pB_return, SIGNAL(clicked()), this, SLOT(closeDialog()));
-    connect(&m_Timer, SIGNAL(timeout()), this, SLOT(cannelDialog()));
+    connect(pB_return, &QPushButton::clicked, this, &ProcessDlg::closeDialog);
+    connect(&m_Timer, &QTimer::timeout, this, &ProcessDlg::cannelDialog);
 }
 
-processDlg::~processDlg() {
+ProcessDlg::~ProcessDlg() {
 }
 
-void processDlg::closeDialog() {
+void ProcessDlg::closeDialog() {
     QMessageBox box(QMessageBox::Critical, QString(tr("错误")),
                     QString(tr("连接失败，请检查网络!")), QMessageBox::Ok, this,
                     Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
@@ -25,7 +25,7 @@ void processDlg::closeDialog() {
     //close();
 }
 
-void processDlg::cannelDialog() {
+void ProcessDlg::cannelDialog() {
     QMessageBox box(QMessageBox::Critical, QString(tr("错误")),
                     QString(tr("连接超时，请检查网络!")), QMessageBox::Ok, this,
                     Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
