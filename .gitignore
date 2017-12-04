@@ -4,6 +4,10 @@
 # Temporary files
 *~
 *.orig
+*.stash
+*.autosave
+core
+*.core
 
 # Prerequisites
 *.d
@@ -13,6 +17,8 @@
 *.lo
 *.o
 *.obj
+*.moc
+moc_predefs.h
 
 # Precompiled Headers
 *.gch
