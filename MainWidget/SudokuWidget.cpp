@@ -74,14 +74,11 @@ sudokuMain::sudokuMain(QWidget *parent)
     m_strTime = QString("00:00");
     lcdNumber->display(QString(m_strTime));
 
-    int L, R, V;
-    for (L = 0; L < 9; L++) {
-        for (R = 0; R < 9; R++) {
-            for (V = 0; V < 10; V++) {
-                m_table[L][R][V] = 0;
-            }
-            m_writable[L][R] = 1;
-            m_setted[L][R] = 0;
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
+            m_table[x][y] = 0;
+            m_writable[x][y] = 1;
+            m_setted[x][y] = 0;
         }
     }
 

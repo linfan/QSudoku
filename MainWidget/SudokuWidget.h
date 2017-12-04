@@ -35,8 +35,7 @@ private:
     QString m_strTime;         // Timer String To Display
     int m_iTimeSecond;         // The Second Part Of Timer
     int m_iTimeMinute;         // The Minute Part Of Timer
-    int m_table[9][9][10];     // The Question Table
-    int m_tableBackup[9][9];   // The "table"'s Copy For Restore, Because "GetSolution" May Alter The "table"
+    int m_table[9][9];         // The Question Table
     int m_setted[9][9];        // Recode The Grids On Table Those Have Been Setted With A Value
     int m_solution[9][9];      // The Solution Calculated By Computer
     char m_cTheme;             // The Code Of Theme Selected By Player
@@ -66,12 +65,12 @@ private:
     void setButtonNum(QPushButton *pB, int Num, int size);
     void sendDatagram(int message);
     void showTable();
-    bool matrixEqual(int table[9][9][10], int solution[9][9]);
+    bool matrixEqual(int table[9][9], int solution[9][9]);
     bool checkGameAlreadyBegin();
     SudokuMatrix getButtonMatrix();
-    void initStatusTable(int table[9][9][10]);
+    void initStatusTable(int table[9][9]);
     void setTable(bool isLoadFromFile);
-    void readTableFile(int table[9][9][10]);
+    void readTableFile(int table[9][9]);
 
 private slots:
     void mainTimerUp();

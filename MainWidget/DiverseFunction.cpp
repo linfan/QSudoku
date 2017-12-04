@@ -81,9 +81,9 @@ void sudokuMain::changeTheme(const QString &text) {
         QPushButton *pB;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                if (m_table[i][j][0] != 0) {
+                if (m_table[i][j] != 0) {
                     pB = getPointFromPosition(i + 1, j + 1);
-                    setButtonNum(pB, m_table[i][j][0], 40);
+                    setButtonNum(pB, m_table[i][j], 40);
                 }
             }
         }
@@ -142,24 +142,23 @@ void sudokuMain::enableIP() {
 
 
 void sudokuMain::showTable() {
-    int L, R;
     QPushButton* pB;
-    for (L = 0; L < 9; L++) {
-        for (R = 0; R < 9; R++) {
-            if (m_table[L][R][0] != 0) {
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
+            if (m_table[x][y] != 0) {
                 //Show Table
-                pB = getPointFromPosition(L + 1, R + 1);
-                setButtonNum(pB, m_table[L][R][0], 40);
+                pB = getPointFromPosition(x + 1, y + 1);
+                setButtonNum(pB, m_table[x][y], 40);
                 pB->setFlat(true);
-                m_writable[L][R] = 0;
+                m_writable[x][y] = 0;
             }
         }
     }
-    for (L = 0; L < 9; L++) {
-        for (R = 0; R < 9; R++) {
+    for (int x = 0; x < 9; x++) {
+        for (int y = 0; y < 9; y++) {
             //Unlock Table
-            m_writableLock[L][R] = m_writable[L][R];
-            m_writable[L][R] = 0;//Alter After Being Setted ,Protect "table"
+            m_writableLock[x][y] = m_writable[x][y];
+            m_writable[x][y] = 0;//Alter After Being Setted ,Protect "table"
         }
     }
     int val = (int)(100 * (1 - (float)m_blankNumber / (float)m_totalBlank));
@@ -228,7 +227,7 @@ void sudokuMain::processPendingDatagrams() {
         out.setVersion(QDataStream::Qt_4_5);
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                out << m_table[i][j][0] + 1000;
+                out << m_table[i][j] + 1000;
             }
         }
         QString ip;
@@ -236,14 +235,14 @@ void sudokuMain::processPendingDatagrams() {
         m_udpSender.writeDatagram(datagram, QHostAddress(ip), 5824);//Send The Table
     } else if (val >= 1000 && val < 1010 && rB_online->isChecked()) {
         int i, j;
-        m_table[0][0][0] = val - 1000;
+        m_table[0][0] = val - 1000;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
                 if (i == 0 && j == 0) {
                     continue;//Ignore [0][0]
                 }
-                in >> m_table[i][j][0];
-                m_table[i][j][0] -= 1000;
+                in >> m_table[i][j];
+                m_table[i][j] -= 1000;
             }
         }
         sendDatagram(MES_FINISH);//Finish Receive Table
@@ -258,8 +257,8 @@ void sudokuMain::processPendingDatagrams() {
         m_beginPorgressBar = false;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                m_table[i][j][0] = m_solution[i][j];
-                setButtonNum(getPointFromPosition(i + 1, j + 1), m_table[i][j][0], 40);
+                m_table[i][j] = m_solution[i][j];
+                setButtonNum(getPointFromPosition(i + 1, j + 1), m_table[i][j], 40);
             }
         }
         m_bFinished = true;
@@ -277,8 +276,8 @@ void sudokuMain::processPendingDatagrams() {
         m_beginPorgressBar = false;
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                m_table[i][j][0] = 0;
-                setButtonNum(getPointFromPosition(i + 1, j + 1), m_table[i][j][0], 40);
+                m_table[i][j] = 0;
+                setButtonNum(getPointFromPosition(i + 1, j + 1), m_table[i][j], 40);
             }
         }
         m_bFinished = true;

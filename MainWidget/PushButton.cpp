@@ -42,7 +42,7 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
         m_click_Timer->stop();
         if (m_time_between_click != 0
                 && m_last_click_button == 10 * (L - 1) + (R - 1)) { // Double click
-            m_table[L - 1][R - 1][0] = 0;
+            m_table[L - 1][R - 1] = 0;
             clearButton(pB, L, R);
             if (m_beginPorgressBar && m_iSetNum != 0 && m_setted[L - 1][R - 1] == 1) {
                 m_blankNumber++;
@@ -52,7 +52,7 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
                 sendDatagram(m_process);
             }
         } else { // Single click
-            m_table[L - 1][R - 1][0] = m_iSetNum;
+            m_table[L - 1][R - 1] = m_iSetNum;
             setButtonNum(pB, m_iSetNum, 40);
             if (m_beginPorgressBar && m_iSetNum != 0 && m_setted[L - 1][R - 1] == 0) {
                 m_blankNumber--;
@@ -67,7 +67,7 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
                                      QString(tr("不正确,再仔细想想-_-!")), QMessageBox::Ok, this,
                                      Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
                     fail.exec();
-                    m_table[L - 1][R - 1][0] = 0;
+                    m_table[L - 1][R - 1] = 0;
                     clearButton(pB, L, R);
                     m_blankNumber = 1;
                     m_setted[L - 1][R - 1] = 0;
@@ -109,10 +109,10 @@ int sudokuMain::pushButtonDown(QPushButton *pB, int L, int R) {
     return false;
 }
 
-bool sudokuMain::matrixEqual(int table[9][9][10], int solution[9][9]) {
+bool sudokuMain::matrixEqual(int left[9][9], int right[9][9]) {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
-            if (table[i][j][0] != solution[i][j]) {
+            if (left[i][j] != right[i][j]) {
                 return false;
             }
         }
@@ -122,7 +122,7 @@ bool sudokuMain::matrixEqual(int table[9][9][10], int solution[9][9]) {
 
 void sudokuMain::clearButton(QPushButton *pB, int L, int R) {
     if (m_writable[L - 1][R - 1]) {
-        m_table[L - 1][R - 1][0] = 0;
+        m_table[L - 1][R - 1] = 0;
         setButtonNum(pB, 0, 40);
     }
 }
