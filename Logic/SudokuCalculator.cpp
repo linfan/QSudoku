@@ -1,10 +1,10 @@
-#include "LinkList.h"
+#include "PosStack.h"
 #include "SudokuCalculator.h"
 
 // The Calculation
 int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
     int tablecopy[9][3][3];
-    int T_L, T_R;           // The Current Position
+    int T_X, T_Y;           // The Current Position
     int bStepBack = 0;      // If "1" Means The Last Step Has No Usable Value
     int bGotValuable;       // If "0" Means Current Position Has No Usable Value
     int bSolvable = 1;      // If "0" Means This Sudoku_Table Has No Solution
@@ -12,7 +12,7 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
     int NumOfSolutions = 0; // The Number Of Possible Answer
     int tempN;              // A Temporary Position
     int tempT;              // A Temporary Value
-    LinkList recode;        // "recode" tell the positions in "table" which are writable
+    PosStack recode;        // "recode" tell the positions in "table" which are writable
 
     // Put Usable Positions In To "recode"
     for (int i = 0; i < 9; i++) {
@@ -24,7 +24,7 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
     }
 
     // Head Node is ALLTHEWAYS NULL
-    recode.cur = recode.head->next;
+    recode.cur = recode.bottom->up;
 
     if (recode.counts == 0) { // The Table Is Full
         return 0;
@@ -72,9 +72,9 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
     do {
         bGotValuable = 0;
 
-        //Get A Usable Position
-        T_L = recode.cur->L;
-        T_R = recode.cur->R;
+        // Get a usable position
+        T_X = recode.cur->X;
+        T_Y = recode.cur->Y;
 
         if (bStepBack == 0) {
             // table -> tablecopy
@@ -92,45 +92,45 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
             }
 
             for (int k = 0; k < 10; k++) {
-                table[T_L][T_R][k] = 0;   //All To "0"
+                table[T_X][T_Y][k] = 0;   //All To "0"
             }
 
             for (int j = 0; j < 9; j++) { //The Same Row With Position Of [T_L][T_R]
-                tempT = table[T_L][j][0];
-                if (j != T_R) {
-                    table[T_L][T_R][tempT] = tempT;
+                tempT = table[T_X][j][0];
+                if (j != T_Y) {
+                    table[T_X][T_Y][tempT] = tempT;
                 }
             }
 
             for (int i = 0; i < 9; i++) { //The Same Column With Position Of [T_L][T_R]
-                tempT = table[i][T_R][0];
-                if (i != T_L) {
-                    table[T_L][T_R][tempT] = tempT;
+                tempT = table[i][T_Y][0];
+                if (i != T_X) {
+                    table[T_X][T_Y][tempT] = tempT;
                 }
             }
 
             //The Same "33" 's Square With Position Of [T_L][T_R]
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    tempN = (int(T_L / 3)) * 3 + T_R / 3;
+                    tempN = (int(T_X / 3)) * 3 + T_Y / 3;
                     tempT = tablecopy[tempN][i][j];
-                    table[T_L][T_R][tempT] = tempT;
+                    table[T_X][T_Y][tempT] = tempT;
                 }
             }
 
             for (int k = 1; k < 10; k++) { //Get Inverse
-                if (table[T_L][T_R][k] == 0) {
-                    table[T_L][T_R][k] = k;
+                if (table[T_X][T_Y][k] == 0) {
+                    table[T_X][T_Y][k] = k;
                     bGotValuable = 1;
                 } else {
-                    table[T_L][T_R][k] = 0;
+                    table[T_X][T_Y][k] = 0;
                 }
             }
         } else {
-            table[T_L][T_R][0] = 0;
+            table[T_X][T_Y][0] = 0;
             bStepBack = 0;
             for (int k = 1; k < 10; k++) { //DeTect The Usable Values
-                if (table[T_L][T_R][k] != 0) {
+                if (table[T_X][T_Y][k] != 0) {
                     bGotValuable = 1;
                     break;
                 }
@@ -138,11 +138,11 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
         }
 
         if (bGotValuable == 0) { //If No Usable Value, Move Back
-            recode.cur = recode.cur->prov;
+            recode.cur = recode.cur->down;
             bStepBack = 1;
 
-            if (recode.cur == recode.head) {
-                recode.cur = recode.end;
+            if (recode.cur == recode.bottom) {
+                recode.cur = recode.cap;
                 if (NumOfSolutions == 1) {
                     bSolvable = 1;
                     bUnique = 1;
@@ -150,22 +150,22 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
                     bSolvable = 0;
                     bUnique = 0;
                 }
-                break;//If No Possible Solution ,Do Break
+                break;  // If No Possible Solution, Do Break
             }
-        } else { //If Got Usable Value, Move On
+        } else { // If Got Usable Value, Move On
             for (int k = 1; k < 10; k++) {
-                if (table[T_L][T_R][k] != 0) {
-                    table[T_L][T_R][k] = 0;
-                    table[T_L][T_R][0] = k;
+                if (table[T_X][T_Y][k] != 0) {
+                    table[T_X][T_Y][k] = 0;
+                    table[T_X][T_Y][0] = k;
                     break;
                 }
             }
-            recode.cur = recode.cur->next;
+            recode.cur = recode.cur->up;
         }
 
-        if (recode.cur == recode.end) {
+        if (recode.cur == recode.cap) {
             NumOfSolutions++;
-            if (NumOfSolutions == 1) { //Recode The Frist Solution
+            if (NumOfSolutions == 1) { // Recode The Frist Solution
                 for (int i = 0; i < 9; i++) {
                     for (int j = 0; j < 9; j++) {
                         solution[i][j] = table[i][j][0];
@@ -173,19 +173,19 @@ int SudokuCalculator::getSolution(int table[9][9][10], int solution[9][9]) {
                 }
                 //"'Reach End' But 'Neither 'Insolvable' Or 'MultiSolutions''",Do continue
                 bStepBack = 1;
-                recode.cur = recode.cur->prov;
+                recode.cur = recode.cur->down;
                 continue;
             }
-            if (NumOfSolutions >= 2) { //If More THan One Possible Answer ,Do Break
+            if (NumOfSolutions >= 2) { // If More Than One Possible Answer, Do Break
                 bUnique = 0;
                 break;
             }
         }
-    } while (recode.cur != recode.end); //If "No Reach The End",Do Loop
+    } while (recode.cur != recode.cap); // If "No Reach The End", Do Loop
 
-    if (bUnique) { //Can NOT Use "bSolvable" ,May Be MultiSolution
+    if (bUnique) { // Can NOT Use "bSolvable", May Be MultiSolution
         return 1;
-    } else { //No Solution Or MultiSolution
+    } else {       // No Solution Or MultiSolution
         return 0;
     }
 }

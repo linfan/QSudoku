@@ -8,7 +8,6 @@ if [ "$1" = "run" ]; then
 fi
 
 if [ "$1" = "clean" ]; then
-    make clean
-    rm -f *.moc *.o *~ core *.core moc_predefs.h target_wrapper.sh Makefile
-    rm -fr Test.app
+    rm -f *~ core *.core target_wrapper.sh Makefile
+    rm -fr Test.app MediumFiles
 fi
