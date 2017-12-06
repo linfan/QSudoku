@@ -1,6 +1,6 @@
+#include <stdlib.h>
+#include <QString>
 #include "PosStack.h"
-
-#define NULL 0
 
 PosStack::PosStack() {
     counts = 0;
@@ -34,6 +34,8 @@ void PosStack::push(int x, int y) {
 }
 
 void PosStack::pop() {
+    if (counts <= 0)
+        throw QString("EMPTY_STACK");
     cur = top->down;
     delete top;
     cur->up = cap;

@@ -4,6 +4,7 @@
 # Generated file
 Makefile
 MediumFiles/
+*-Debug/
 
 # Temporary files
 *~

@@ -1,15 +1,18 @@
-QT += testlib
 TEMPLATE = app
-TARGET = Test
-INCLUDEPATH += .
-CONFIG += testcase
+QT += core testlib
+QT -= gui
+TARGET = QTest
+CONFIG += console testcase
+CONFIG -= app_bundle
 RCC_DIR += MediumFiles
 MOC_DIR += MediumFiles
 OBJECTS_DIR += MediumFiles
 DEFINES += QT_DEPRECATED_WARNINGS
+INCLUDEPATH += .
 
 # Input
-HEADERS += PosStackTest.h \
+HEADERS += TestMain.h \
            ../Logic/PosStack.h
 SOURCES += TestMain.cpp \
+           PosStackTest.cpp \
            ../Logic/PosStack.cpp

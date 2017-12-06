@@ -6,5 +6,5 @@ if [ "$1" = "format" ]; then
 fi
 
 if [ "$1" = "clean" ]; then
-    rm -fr ../build-Qsudoku-* MediumFiles/ Makefile
+    rm -fr ../build-Qsudoku-* MediumFiles/ *-Debug/ Makefile
 fi
