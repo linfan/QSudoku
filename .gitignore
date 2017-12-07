@@ -5,6 +5,7 @@
 Makefile
 MediumFiles/
 *-Debug/
+*-Release/
 
 # Temporary files
 *~

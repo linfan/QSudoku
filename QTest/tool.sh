@@ -9,5 +9,5 @@ fi
 
 if [ "$1" = "clean" ]; then
     rm -f *~ core *.core target_wrapper.sh Makefile
-    rm -fr Test.app MediumFiles
+    rm -fr QTest.app MediumFiles ../build-QTest*
 fi

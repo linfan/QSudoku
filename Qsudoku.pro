@@ -3,9 +3,9 @@ UI_DIR += MediumFiles
 RCC_DIR += MediumFiles
 MOC_DIR += MediumFiles
 OBJECTS_DIR += MediumFiles
-INCLUDEPATH += Dialogs MainWidget
+INCLUDEPATH += . Dialogs MainWidget
 DEPENDPATH += .
-INCLUDEPATH += .
+QT += network widgets
 
 # Input
 HEADERS += \
@@ -39,6 +39,5 @@ SOURCES += Main.cpp \
     MainWidget/PushButton.cpp \
     MainWidget/SudokuWidget.cpp \
     Logic/PosStack.cpp
-QT += network widgets
 RESOURCES += Resource/sudoku.qrc
 OTHER_FILES += MainWidget/nearlyFinish.table

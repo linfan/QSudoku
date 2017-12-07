@@ -1,14 +1,10 @@
 TEMPLATE = app
-QT += core testlib
-QT -= gui
+QT += testlib
 TARGET = QTest
-CONFIG += console testcase
-CONFIG -= app_bundle
-RCC_DIR += MediumFiles
-MOC_DIR += MediumFiles
-OBJECTS_DIR += MediumFiles
+CONFIG += testcase
 DEFINES += QT_DEPRECATED_WARNINGS
-INCLUDEPATH += .
+MOC_DIR = MediumFiles
+OBJECTS_DIR = MediumFiles
 
 # Input
 HEADERS += TestMain.h \
