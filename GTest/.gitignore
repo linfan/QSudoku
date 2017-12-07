@@ -1,0 +1,5 @@
+# Generated or framework folder
+include/
+lib/
+obj/
+bin/
