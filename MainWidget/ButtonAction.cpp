@@ -1,12 +1,9 @@
 #include <QDebug>
 #include <QString>
 #include <QFile>
-//#include <QTimer>
-//#include <QTime>
 #include <QPushButton>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QAbstractButton>
 #include "Aboutdlg.h"
 #include "ProcessDlg.h"
 #include "SudokuWidget.h"

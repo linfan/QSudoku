@@ -1,11 +1,8 @@
 #include <QDebug>
-#include <QTimer>
 #include <QString>
-#include <QComboBox>
 #include <QPushButton>
 #include <QMessageBox>
 #include <QHostAddress>
-#include <QUdpSocket>
 #include "SudokuWidget.h"
 #include "ProcessDlg.h"
 #include "ConformDlg.h"
