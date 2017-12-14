@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = GTest
+CONFIG = c++11 testcase
 LIBS += -L$$PWD/lib -lgtest -lgmock
 INCLUDEPATH += ./include
 DEFINES += QT_DEPRECATED_WARNINGS
